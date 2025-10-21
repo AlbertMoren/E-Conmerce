@@ -7,6 +7,20 @@ import static config.Config.*;
 
 public class UsuarioDAO {
 
+
+    static {
+        try {
+
+            Class.forName(config.Config.BD_DRIVER);
+        } catch (ClassNotFoundException e) {
+            System.err.println("### FALHA CRÍTICA: Driver JDBC do PostgreSQL não encontrado! ###");
+            e.printStackTrace();
+        }
+    }
+
+
+
+
     // obtem os usuarios do banco
     public List<Usuario> obterTodos() {
         List<Usuario> resultado = new ArrayList<>();
