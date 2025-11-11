@@ -27,14 +27,6 @@ public class Main {
             System.out.println("Usuário não encontrado.");
         }
 
-        // atualizar um usuario
-        System.out.println("\nAtualizando usuário com ID = 2...");
-        boolean atualizado = usuarioDAO.atualizar("Messi", "messi@email.com", "lionel", 2);
-        System.out.println("Atualizado? " + atualizado);
 
-        // remover um usuario
-        System.out.println("\nRemovendo usuário com ID = 1...");
-        boolean removido = usuarioDAO.remover(1);
-        System.out.println("Removido? " + removido);
     }
 }

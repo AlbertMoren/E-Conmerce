@@ -5,6 +5,8 @@ import java.util.List;
 import static config.Config.*;
 
 
+
+
 public class UsuarioDAO {
 
 
@@ -96,9 +98,29 @@ public class UsuarioDAO {
         }
     }
 
+    public boolean validarLogin(String email, String senha) {
+
+        String sql = "SELECT * FROM usuario WHERE email = ? AND senha = ?";
+        try (Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, senha);
+
+            try(ResultSet rs = preparedStatement.executeQuery()){
+                return rs.next();
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("Erro ao validar login: " + ex.getMessage());
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
     // atualiza um usuario
-    public boolean atualizar(String nome, String email, String senha, int id) {
-        String sql = "UPDATE usuario SET nome = ?, email = ?, senha = ? WHERE id = ?";
+    public static boolean atualizar(String nome, String email, String senha, String emailantigo) {
+        String sql = "UPDATE usuario SET nome = ?, email = ?, senha = ? WHERE email = ?";
 
         try (Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -106,10 +128,9 @@ public class UsuarioDAO {
             preparedStatement.setString(1, nome);
             preparedStatement.setString(2, email);
             preparedStatement.setString(3, senha);
-            preparedStatement.setInt(4, id);
+            preparedStatement.setString(4, emailantigo);
 
-            int linhasAfetadas = preparedStatement.executeUpdate();
-            return linhasAfetadas == 1; // Retorna true se 1 linha foi atualizada
+            return (preparedStatement.executeUpdate() == 1);
 
         } catch (SQLException ex) {
             System.err.println("Erro ao atualizar usuário: " + ex.getMessage());
@@ -119,16 +140,14 @@ public class UsuarioDAO {
     }
 
     // remove um usuario
-    public boolean remover(int id) {
-        String sql = "DELETE FROM usuario WHERE id = ?";
+    public static boolean remover(String email) {
+        String sql = "DELETE FROM usuario WHERE email = ?";
 
         try (Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setInt(1, id);
-
-            int linhasAfetadas = preparedStatement.executeUpdate();
-            return linhasAfetadas == 1; // Retorna true se 1 linha foi removida
+            preparedStatement.setString(1, email);
+            return (preparedStatement.executeUpdate() == 1);
 
         } catch (SQLException ex) {
             System.err.println("Erro ao remover usuário: " + ex.getMessage());

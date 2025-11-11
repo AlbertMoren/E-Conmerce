@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -15,6 +16,14 @@
         <img src="assets/LOGO-ICON.png" alt="Logo Papoco" class="logo">
     </div>
 </header>
+
+<%
+    String msgSucesso = (String) request.getAttribute("mensagemSucesso");
+    String msgErro = (String) request.getAttribute("mensagemErro");
+%>
+
+
+
 
 <div class="container">
 
@@ -37,8 +46,30 @@
             <input type="password" id="senha" name="senha_usuario" required>
         </div>
 
+        <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+                Já tem uma conta?
+                <a href="/login.jsp">Faça o login</a>
+        </div>
+
+
+
         <button type="submit">Cadastrar</button>
     </form>
 
-</div> </body>
+    <% if (msgSucesso != null) { %>
+    <div style="color: green; border: 1px solid green; padding: 10px; margin-bottom: 15px;">
+        <%= msgSucesso %>
+    </div>
+    <% } %>
+
+    <% if (msgErro != null) { %>
+    <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 15px;">
+        <%= msgErro %>
+    </div>
+    <% } %>
+
+
+    </div>
+</body>
+
 </html>
