@@ -26,7 +26,7 @@ public class UsuarioDAO {
     // obtem os usuarios do banco
     public List<Usuario> obterTodos() {
         List<Usuario> resultado = new ArrayList<>();
-        String sql = "SELECT id, nome, email, senha FROM usuario";
+        String sql = "SELECT id, nome, email, endereco senha FROM usuario";
 
 
         try (Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
@@ -39,6 +39,7 @@ public class UsuarioDAO {
                 usuario.setNome(resultSet.getString("nome"));
                 usuario.setEmail(resultSet.getString("email"));
                 usuario.setSenha(resultSet.getString("senha"));
+                usuario.setEndereco(resultSet.getString("endereco"));
                 resultado.add(usuario);
             }
 
@@ -53,7 +54,7 @@ public class UsuarioDAO {
     // obtem um usuario pelo id
     public Usuario obter(int id) {
         Usuario usuario = null;
-        String sql = "SELECT id, nome, email, senha FROM usuario WHERE id = ?";
+        String sql = "SELECT id, nome, email,endereco senha FROM usuario WHERE id = ?";
 
         try (Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -67,6 +68,7 @@ public class UsuarioDAO {
                     usuario.setNome(resultSet.getString("nome"));
                     usuario.setEmail(resultSet.getString("email"));
                     usuario.setSenha(resultSet.getString("senha"));
+                    usuario.setEndereco(resultSet.getString("endereco"));
                 }
             }
 
@@ -79,7 +81,7 @@ public class UsuarioDAO {
 
     // insere um usuario
     public boolean inserir(String nome, String email, String senha) {
-        String sql = "INSERT INTO usuario (nome, email, senha) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO usuario (nome, email, senha,endereco) VALUES (?, ?, ?,?)";
 
         try (Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -87,6 +89,7 @@ public class UsuarioDAO {
             preparedStatement.setString(1, nome);
             preparedStatement.setString(2, email);
             preparedStatement.setString(3, senha);
+            preparedStatement.setString(4, endereco);
 
             int linhasAfetadas = preparedStatement.executeUpdate();
             return linhasAfetadas == 1; // Retorna true se 1 linha foi inserida
@@ -119,6 +122,7 @@ public class UsuarioDAO {
     }
 
     // atualiza um usuario
+    //Falta alterar para poder editar o endereço e outros campos(Albert)
     public static boolean atualizar(String nome, String email, String senha, String emailantigo) {
         String sql = "UPDATE usuario SET nome = ?, email = ?, senha = ? WHERE email = ?";
 
