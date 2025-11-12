@@ -1,0 +1,194 @@
+/* === SEU CSS ORIGINAL (MODIFICADO) === */
+
+/* ATUALIZAÇÃO: 'body' agora é o padrão.
+   Removi o 'display: flex' para não afetar o dashboard. */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 0;
+}
+
+/* ADIÇÃO: Nova classe para as páginas de Login e Cadastro.
+   Ela contém o seu 'display: flex' original. */
+.body-center-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding-top: 60px; /* Mantém o espaço do banner */
+}
+
+/* Seu container original (para login/cadastro) */
+.container {
+    background-color: #ffffff;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* --- O RESTO DO SEU CSS ORIGINAL (SEM MUDANÇAS) --- */
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1.5em;
+}
+.form-group {
+    margin-bottom: 1.5em;
+}
+label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: 600;
+    color: #555;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #050303;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+button:hover {
+    background-color: #050303;
+}
+.top-banner {
+    background-color: #ff4b00;
+    width: 100%;
+    padding: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+.banner-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centraliza a logo */
+    padding: 0 20px;
+}
+.logo {
+    max-height: 40px;
+    width: auto;
+    display: block;
+}
+
+/* === ADIÇÕES PARA O LAYOUT DO DASHBOARD === */
+
+/* Define o body do dashboard */
+.body-dashboard {
+    padding-top: 60px; /* Apenas o espaço do banner */
+}
+
+/* A trilha/breadcrumb (inspirado na imagem) */
+.breadcrumb {
+    background-color: #ffffff;
+    padding: 1em 2em;
+    border-bottom: 1px solid #eee;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+.breadcrumb-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    font-size: 0.9em;
+    color: #555;
+}
+.breadcrumb-container a {
+    color: #ff4b00; /* Laranja do seu banner */
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Container principal do Dashboard */
+.dashboard-wrapper {
+    display: flex;
+    max-width: 1100px;
+    margin: 2em auto;
+    gap: 2em; /* Espaço entre a sidebar e o conteúdo */
+}
+
+/* A Barra Lateral (Sidebar) */
+.dashboard-sidebar {
+    flex: 0 0 250px; /* Largura fixa de 250px */
+}
+.dashboard-sidebar h3 {
+    font-size: 1.1em;
+    color: #333;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 0.5em;
+}
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.sidebar-menu li a {
+    display: block;
+    padding: 0.8em 1em;
+    text-decoration: none;
+    color: #555;
+    font-weight: 600;
+    border-radius: 5px;
+}
+.sidebar-menu li a:hover {
+    background-color: #eee;
+}
+.sidebar-menu li.active a {
+    background-color: #ff4b00; /* Laranja */
+    color: white;
+}
+
+/* Conteúdo Principal (Formulários) */
+.dashboard-content {
+    flex-grow: 1; /* Ocupa o resto do espaço */
+    background-color: #ffffff;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.dashboard-content h2 {
+    text-align: left; /* Alinha o título do form à esquerda */
+    margin-bottom: 1em;
+}
+
+/* Seção de Perigo (Remover Conta) */
+.delete-section {
+    border-top: 1px solid #eee;
+    margin-top: 2em;
+    padding-top: 1.5em;
+}
+.delete-section h4 {
+    color: #dc3545; /* Vermelho */
+    margin-bottom: 0.5em;
+}
+.delete-section p {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 1em;
+}
+.btn-danger {
+    background-color: #dc3545;
+}
+.btn-danger:hover {
+    background-color: #a71d2a;
+}
