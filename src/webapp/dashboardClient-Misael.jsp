@@ -13,7 +13,7 @@
 <html>
 <head>
     <title>Minha Conta - <%= emailDoUsuario %></title>
-    <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet" href="estilo2.css">
 </head>
 
 <body class="body-dashboard">
