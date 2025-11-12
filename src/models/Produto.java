@@ -1,13 +1,15 @@
-public class Produtos {
+package models;
+
+public class Produto {
     private int id_produto;
     private String descricao;
     private Double preco;
     private int quantidade;
     //ADicionar categoria(Albert)
 
-    public Produtos(){};
+    public Produto(){};
 
-    public Produtos(int id, String descricao, Double preco, int quantidade){
+    public Produto(int id, String descricao, Double preco, int quantidade){
         this.id_produto = id;
         this.descricao = descricao;
         this.preco = preco;

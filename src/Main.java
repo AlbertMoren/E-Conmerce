@@ -1,16 +1,18 @@
 import models.Usuario;
 import models.UsuarioDAO;
+import models.Produto;
+import models.ProdutoDAO;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        ProdutoDAO produtoDAo = new ProdutoDAO();
 
-        // inserir usuario
-        System.out.println("Inserindo novo usuário...");
-        boolean inserido = usuarioDAO.inserir("Neymar", "neymarjr@gmail.com", "bruna");
-        System.out.println("Usuário inserido? " + inserido);
-
+        // inserir produto
+        System.out.println("Inserindo novo produto...");
+        boolean inserido = produtoDAo.inserir("Neymar", "neymarjr@gmail.com", "bruna");
+        System.out.println("prduto inserido? " + produtoDAo);
+         /*
         // listar os usuarios
         System.out.println("\nListando usuários...");
         List<Usuario> usuarios = usuarioDAO.obterTodos();
@@ -26,7 +28,7 @@ public class Main {
         } else {
             System.out.println("Usuário não encontrado.");
         }
-
+        */
 
     }
 }

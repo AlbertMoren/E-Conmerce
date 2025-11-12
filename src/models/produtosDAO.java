@@ -1,3 +1,9 @@
+package models;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import static config.Config.*;
+
 public class produtosDAO {
     static {
         try {
@@ -9,9 +15,10 @@ public class produtosDAO {
         }
     }
 
-    public List<Produtos> obterTodos() {
-        List<Produtos> resultado = new ArrayList<>();
-        String sql = "SELECT * FROM produtos;";
+    //LISTA TODOS OS PRODUTOS
+    public List<Produto> obterTodos() {
+        List<Produto> resultado = new ArrayList<>();
+        String sql = "SELECT * FROM produto;";
 
 
         try (Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
@@ -19,11 +26,11 @@ public class produtosDAO {
              ResultSet resultSet = statement.executeQuery(sql)) {
 
             while (resultSet.next()) {
-                Produtos produto = new Produto();
+                Produto produto = new Produto();
                 produto.setId(resultSet.getInt("id"));
-                produto.setNome(resultSet.getString("descricao"));
-                produto.setEmail(resultSet.getString("preco"));
-                produto.setSenha(resultSet.getString("quantidade"));
+                produto.setDescricao(resultSet.getString("descricao"));
+                produto.setPreco(resultSet.getDouble("preco"));
+                produto.setQuantidade(resultSet.getInt("quantidade"));
                 resultado.add(produto);
             }
 
@@ -35,8 +42,9 @@ public class produtosDAO {
         return resultado;
     }
 
+    //lISTA UM UNICO PRODUTO
     public Produtos obter(int id) {
-        Produtos produto = null;
+        Produto produto = null;
         String sql = "SELECT * FROM produtos WHERE id = ?";
 
         try (Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
@@ -62,15 +70,16 @@ public class produtosDAO {
         return produto;
     }
 
+    //iNSERIR UM PRODUTO
     public boolean inserir(String descricao, Double preco, int quantidade) {
-        String sql = "INSERT INTO produto (descricao, preco, quantidade) VALUES (?, ?, ?,?)";
+        String sql = "INSERT INTO produto (descricao, preco, quantidade) VALUES (?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, descricao);
-            preparedStatement.setString(2, preco);
-            preparedStatement.setString(3, quantidade);
+            preparedStatement.setDouble(2, preco);
+            preparedStatement.setInt(3, quantidade);
 
             int linhasAfetadas = preparedStatement.executeUpdate();
             return linhasAfetadas == 1; 
@@ -82,13 +91,40 @@ public class produtosDAO {
         }
     }
 
+    //Atualizar produto
+    public boolean atualizar(int id, String descricao, Double preco, int quantidade){
+        Boolean sucesso = false;
+        String_sql = "UPDATE produtos SET descricao = ?, preco = ?, quantidade = ? WHERE id = ?";
+
+        try(Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
+        PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, produto.getDescricao());
+            preparedStatement.setDouble(2, produto.getPreco());
+            preparedStatement.setInt(3, produto.getQuantidade());
+            preparedStatement.setInt(4, produto.getId());
+
+            sucesso = (preparedStatement.executeUpdate() == 1);
+
+            return sucesso;
+
+        } catch (SQLException ex) {
+            System.err.println("Erro ao atualizar produto: " + ex.getMessage());
+            ex.printStackTrace();
+            return false;
+        }
+
+    }
+    
+
+    //REMOVER PRODUTO PELO id
     public static boolean remover(int id) {
         String sql = "DELETE FROM produto WHERE id = ?";
 
         try (Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setString(1, id);
+            preparedStatement.setInt(1, id);
             return (preparedStatement.executeUpdate() == 1);
 
         } catch (SQLException ex) {
