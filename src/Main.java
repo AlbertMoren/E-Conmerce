@@ -10,7 +10,7 @@ public class Main {
 
         // inserir produto
         System.out.println("Inserindo novo produto...");
-        boolean inserido = produtoDAo.inserir("Neymar", "neymarjr@gmail.com", "bruna");
+        boolean inserido = produtoDAo.inserir("");
         System.out.println("prduto inserido? " + produtoDAo);
          /*
         // listar os usuarios

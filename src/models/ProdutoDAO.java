@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static config.Config.*;
 
-public class produtosDAO {
+public class ProdutoDAO {
     static {
         try {
 
@@ -28,7 +28,7 @@ public class produtosDAO {
 
             while (resultSet.next()) {
                 Produto produto = new Produto();
-                produto.setId(resultSet.getInt("id"));
+                produto.getId_produto(resultSet.getInt("id"));
                 produto.setDescricao(resultSet.getString("descricao"));
                 produto.setPreco(resultSet.getDouble("preco"));
                 produto.setQuantidade(resultSet.getInt("quantidade"));
@@ -63,7 +63,7 @@ public class produtosDAO {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     produto = new Produto();
-                    produto.setId(resultSet.getInt("id_produto"));
+                    produto.getId_produto(resultSet.getInt("id_produto"));
                     produto.setDescricao(resultSet.getString("descricao"));
                     produto.setPreco(resultSet.getDouble("preco"));
                     produto.setQuantidade(resultSet.getInt("quantidade"));
