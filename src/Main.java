@@ -21,7 +21,7 @@ public class Main {
         int idCatEletronicos = 1;
         int idCatPerifericos = 2;
         int idCatHardware = 3;
-
+        
         // inserir Produtos
         produtoDAO.inserir("Placa de Video RTX 4070", 4500.00, 10, idCatHardware);
         produtoDAO.inserir("Processador Ryzen 7 7800X3D", 2800.00, 15, idCatHardware);
