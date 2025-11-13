@@ -18,8 +18,9 @@ public class produtosDAO {
     //LISTA TODOS OS PRODUTOS
     public List<Produto> obterTodos() {
         List<Produto> resultado = new ArrayList<>();
-        String sql = "SELECT * FROM produto;";
+        String sql = "SELECT p.*, p.id_categoria FROM produto p;";
 
+        CategoriaDAO categoriaDao = new CategoriaDAO();
 
         try (Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
              Statement statement = connection.createStatement();
@@ -31,6 +32,12 @@ public class produtosDAO {
                 produto.setDescricao(resultSet.getString("descricao"));
                 produto.setPreco(resultSet.getDouble("preco"));
                 produto.setQuantidade(resultSet.getInt("quantidade"));
+                
+                int idCategoria = resultSet.getInt("id_categoria");
+                Categoria categoria = categoriaDao.obterPorId(idCategoria);
+                categoria.setId(idCategoria);
+
+                produto.setCategoria(categoria);
                 resultado.add(produto);
             }
 
@@ -43,9 +50,10 @@ public class produtosDAO {
     }
 
     //lISTA UM UNICO PRODUTO
-    public Produtos obter(int id) {
+    public Produto obter(int id) {
         Produto produto = null;
-        String sql = "SELECT * FROM produtos WHERE id = ?";
+        String sql = "SELECT p.*, p.id_categoria FROM produto p WHERE p.id_produto = ?;";
+        CategoriaDAO categoriaDao = new CategoriaDAO();
 
         try (Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -54,17 +62,21 @@ public class produtosDAO {
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    produto = new Produtos();
-                    produto.setId(resultSet.getInt("id"));
-                    produto.setNome(resultSet.getString("descricao"));
-                    produto.setEmail(resultSet.getString("preco"));
-                    produto.setSenha(resultSet.getString("quantidade"));
-                    resultado.add(produto);
+                    produto = new Produto();
+                    produto.setId(resultSet.getInt("id_produto"));
+                    produto.setDescricao(resultSet.getString("descricao"));
+                    produto.setPreco(resultSet.getDouble("preco"));
+                    produto.setQuantidade(resultSet.getInt("quantidade"));
+
+                    int idCategoria = resultSet.getInt("id_categoria");
+                    Categoria categoria = categoriaDao.obterPorId(idCategoria);
+                    produto.setCategoria(categoria);
+                   
                 }
             }
 
         } catch (SQLException ex) {
-            System.err.println("Erro ao obter usuário: " + ex.getMessage());
+            System.err.println("Erro ao obter produto: " + ex.getMessage());
             ex.printStackTrace();
         }
         return produto;
@@ -72,7 +84,7 @@ public class produtosDAO {
 
     //iNSERIR UM PRODUTO
     public boolean inserir(String descricao, Double preco, int quantidade) {
-        String sql = "INSERT INTO produto (descricao, preco, quantidade) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO produto (descricao, preco, quantidade, id_categoria) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -80,33 +92,36 @@ public class produtosDAO {
             preparedStatement.setString(1, descricao);
             preparedStatement.setDouble(2, preco);
             preparedStatement.setInt(3, quantidade);
+            
+            preparedStatement.setInt(4, idCategoria);
 
             int linhasAfetadas = preparedStatement.executeUpdate();
             return linhasAfetadas == 1; 
 
         } catch (SQLException ex) {
-            System.err.println("Erro ao inserir usuário: " + ex.getMessage());
+            System.err.println("Erro ao inserir produto: " + ex.getMessage());
             ex.printStackTrace();
             return false;
         }
     }
 
     //Atualizar produto
-    public boolean atualizar(int id, String descricao, Double preco, int quantidade){
-        Boolean sucesso = false;
-        String_sql = "UPDATE produtos SET descricao = ?, preco = ?, quantidade = ? WHERE id = ?";
+    public boolean atualizar(int id, String descricao, Double preco, int quantidade, int idCategoria){
+        String sql = "UPDATE produto SET descricao = ?, preco = ?, quantidade = ?, id_categoria = ? WHERE id_produto = ?";
 
         try(Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setString(1, produto.getDescricao());
-            preparedStatement.setDouble(2, produto.getPreco());
-            preparedStatement.setInt(3, produto.getQuantidade());
-            preparedStatement.setInt(4, produto.getId());
+            preparedStatement.setString(1, descricao);
+            preparedStatement.setDouble(2, preco);
+            preparedStatement.setInt(3, quantidade);
+            preparedStatement.setInt(4, idCategoria);
 
-            sucesso = (preparedStatement.executeUpdate() == 1);
+            preparedStatement.setInt(5, id);
 
-            return sucesso;
+            int linhasAfetadas = preparedStatement.executeUpdate();
+
+            return linhasAfetadas == 1;
 
         } catch (SQLException ex) {
             System.err.println("Erro ao atualizar produto: " + ex.getMessage());
@@ -119,7 +134,7 @@ public class produtosDAO {
 
     //REMOVER PRODUTO PELO id
     public static boolean remover(int id) {
-        String sql = "DELETE FROM produto WHERE id = ?";
+        String sql = "DELETE FROM produto WHERE id_produto = ?";
 
         try (Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -128,7 +143,7 @@ public class produtosDAO {
             return (preparedStatement.executeUpdate() == 1);
 
         } catch (SQLException ex) {
-            System.err.println("Erro ao remover usuário: " + ex.getMessage());
+            System.err.println("Erro ao remover produto: " + ex.getMessage());
             ex.printStackTrace();
             return false;
         }
