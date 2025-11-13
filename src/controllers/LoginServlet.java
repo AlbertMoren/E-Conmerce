@@ -32,16 +32,24 @@ public class LoginServlet extends HttpServlet {
 
         if (loginValido) {
 
+            boolean isAdmin = usuarioDAO.obter(email).getAdministrador();
+
             HttpSession sessao = request.getSession(true);
             sessao.setAttribute("usuarioLogado", email);
-            response.sendRedirect("dashboard.jsp");
+            sessao.setAttribute("isAdmin", isAdmin);
+
+            // redireciona para o dashboard correspondente
+            if (isAdmin) {
+                // redireciona para o Servlet que lista os usuarios para so depois ir para o dashboardAdmin
+                response.sendRedirect("admin/painel");
+            } else {
+                response.sendRedirect("dashboardClient.jsp");
+            }
 
         } else {
             request.setAttribute("mensagemErro", "E-mail ou senha inválidos.");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
             dispatcher.forward(request, response);
         }
-
-
     }
 }

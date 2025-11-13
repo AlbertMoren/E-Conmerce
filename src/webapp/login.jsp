@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="estilo.css">
 
 </head>
-<body>
+<body class="body-center-form">
 
 <header class="top-banner">
     <div class="banner-content">

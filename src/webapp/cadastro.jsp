@@ -1,75 +1,62 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
+<%
+    // 1. Pega as mensagens enviadas pelo CadastroServlet
+    String msgSucesso = (String) request.getAttribute("mensagemSucesso");
+    String msgErro = (String) request.getAttribute("mensagemErro");
+
+    // 2. SE O CADASTRO FOI UM SUCESSO:
+    if (msgSucesso != null) {
+        // Agenda um redirecionamento automático para o login.jsp após 3 segundos
+        response.setHeader("Refresh", "3;url=login.jsp");
+    }
+%>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Cadastro</title>
-
+    <title>Criar Conta</title>
     <link rel="stylesheet" href="estilo.css">
-
 </head>
-<body>
-
-<header class="top-banner">
+<body class="body-center-form"> <header class="top-banner">
     <div class="banner-content">
-        <img src="assets/LOGO-ICON.png" alt="Logo Papoco" class="logo">
+        <a href="index.jsp"> <img src="assets/LOGO-ICON.png" alt="Logo Papoco" class="logo"></a>
     </div>
 </header>
 
-<%
-    String msgSucesso = (String) request.getAttribute("mensagemSucesso");
-    String msgErro = (String) request.getAttribute("mensagemErro");
-%>
-
-
-
-
 <div class="container">
 
-    <h2>Cadastre-se</h2>
+    <%
+        if (msgSucesso != null) {
+            out.println("<div class='alert alert-success'>" + msgSucesso + "</div>");
+        }
+        if (msgErro != null) {
+            out.println("<div class='alert alert-danger'>" + msgErro + "</div>");
+        }
+    %>
+
+    <h2>Criar Conta</h2>
 
     <form action="cadastrar" method="POST">
-
         <div class="form-group">
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome_usuario" required>
         </div>
-
         <div class="form-group">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email_usuario" required>
         </div>
-
         <div class="form-group">
             <label for="senha">Senha:</label>
             <input type="password" id="senha" name="senha_usuario" required>
         </div>
-
-        <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
-                Já tem uma conta?
-                <a href="/login.jsp">Faça o login</a>
-        </div>
-
-
-
         <button type="submit">Cadastrar</button>
+
+        <div style="text-align: center; margin-top: 20px;">
+            Já tem uma conta?
+            <a href="login.jsp">Fazer login</a>
+        </div>
     </form>
-
-    <% if (msgSucesso != null) { %>
-    <div style="color: green; border: 1px solid green; padding: 10px; margin-bottom: 15px;">
-        <%= msgSucesso %>
-    </div>
-    <% } %>
-
-    <% if (msgErro != null) { %>
-    <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 15px;">
-        <%= msgErro %>
-    </div>
-    <% } %>
-
-
-    </div>
+</div>
 </body>
-
 </html>
