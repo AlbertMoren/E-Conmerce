@@ -1,32 +1,33 @@
-import models.Usuario;
-import models.UsuarioDAO;
+import models.*;
 import java.util.List;
 
 public class Main {
+
     public static void main(String[] args) {
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-
-        // inserir usuario
-        System.out.println("Inserindo novo usuário...");
-        boolean inserido = usuarioDAO.inserir("Neymar", "neymarjr@gmail.com", "bruna");
-        System.out.println("Usuário inserido? " + inserido);
-
-        // listar os usuarios
-        System.out.println("\nListando usuários...");
-        List<Usuario> usuarios = usuarioDAO.obterTodos();
-        for (Usuario u : usuarios) {
-            System.out.println(u);
-        }
-
-        // obter um usuário especifico
-        System.out.println("\nBuscando usuário com ID = 2...");
-        Usuario usuario = usuarioDAO.obter(2);
-        if (usuario != null) {
-            System.out.println("Encontrado: " + usuario);
-        } else {
-            System.out.println("Usuário não encontrado.");
-        }
-
-
+        // é obrigatório inserir uma categoria no banco manualmente antes de testar
+        povoarBD();
     }
+
+    // inserindo dados iniciais no Banco de Dados
+    public static void povoarBD() {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        ProdutoDAO produtoDAO = new ProdutoDAO();
+
+        // inserir usuarios
+        usuarioDAO.inserir("Fulano", "ciclano@email.com", "123");
+        usuarioDAO.inserir("Ciclano", "fulano@email.com", "321");
+
+        int idCatEletronicos = 1;
+        int idCatPerifericos = 2;
+        int idCatHardware = 3;
+        
+        // inserir Produtos
+        produtoDAO.inserir("Placa de Video RTX 4070", 4500.00, 10, idCatHardware);
+        produtoDAO.inserir("Processador Ryzen 7 7800X3D", 2800.00, 15, idCatHardware);
+        produtoDAO.inserir("Mouse Gamer Logitech G502", 350.00, 30, idCatPerifericos);
+        produtoDAO.inserir("Teclado Mecânico Redragon", 299.90, 20, idCatPerifericos);
+        produtoDAO.inserir("Monitor Ultrawide 29'", 1100.00, 8, idCatEletronicos);
+    }
+
 }

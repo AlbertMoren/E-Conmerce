@@ -1,17 +1,23 @@
+/* aparencia base do site */
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: #f4f7f6;
     margin: 0;
     padding: 0;
-
+}
+/*  helpers de layouts body, centraliza os conteudos  */
+.body-center-form {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     padding-top: 60px;
 }
-
-
+/* adiciona espaço para o banner */
+.body-dashboard {
+    padding-top: 80px;
+}
+/* containers/caixas de conteudos */
 .container {
     background-color: #ffffff;
     padding: 2em;
@@ -20,28 +26,34 @@ body {
     width: 100%;
     max-width: 400px;
 }
+.container-dashboard {
+    background-color: #ffffff;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 700px;
+    margin: 2em auto;
+}
 
-
+/* Título principal */
 h2 {
     text-align: center;
     color: #333;
     margin-bottom: 1.5em;
 }
 
-
+/* Um grupo de formulário (label + input) */
 .form-group {
     margin-bottom: 1.5em;
 }
-
-
+/* As etiquetas (texto) acima dos campos de input */
 label {
     display: block;
     margin-bottom: 0.5em;
     font-weight: 600;
     color: #555;
 }
-
-
 input[type="text"],
 input[type="email"],
 input[type="password"] {
@@ -51,8 +63,7 @@ input[type="password"] {
     border-radius: 4px;
     box-sizing: border-box;
 }
-
-
+/* estilo do botao */
 button {
     width: 100%;
     padding: 12px;
@@ -65,13 +76,10 @@ button {
     cursor: pointer;
     transition: background-color 0.2s;
 }
-
-
 button:hover {
     background-color: #050303;
-
 }
-
+/* header do site */
 .top-banner {
     background-color: #ff4b00;
     width: 100%;
@@ -82,17 +90,166 @@ button:hover {
     left: 0;
     z-index: 1000;
 }
-
 .banner-content {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     padding: 0 20px;
 }
-
 .logo {
     max-height: 40px;
     width: auto;
     display: block;
+}
+/* estilos dos dashboards */
+/* trilha home/minha conta */
+.breadcrumb {
+    background-color: #ffffff;
+    padding: 1em 2em;
+    border-bottom: 1px solid #eee;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+/* container da trilha */
+.breadcrumb-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    font-size: 0.9em;
+    color: #555;
+}
+/* o link home a trilha */
+.breadcrumb-container a {
+    color: #ff4b00;
+    text-decoration: none;
+    font-weight: 600;
+}
+/* wrapper que segura a barra lateral e o conteudo principal */
+.dashboard-wrapper {
+    display: flex;
+    max-width: 1100px;
+    margin: 2em auto;
+    gap: 2em;
+}
+/* barra lateral */
+.dashboard-sidebar {
+    flex: 0 0 250px;
+}
+/* titulo barra lateral */
+.dashboard-sidebar h3 {
+    font-size: 1.1em;
+    color: #333;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 0.5em;
+}
+/* menu/lista barra lateral */
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+/* links do menu */
+.sidebar-menu li a {
+    display: block;
+    padding: 0.8em 1em;
+    text-decoration: none;
+    color: #555;
+    font-weight: 600;
+    border-radius: 5px;
+}
+.sidebar-menu li a:hover {
+    background-color: #eee;
+}
+.sidebar-menu li.active a {
+    background-color: #ff4b00;
+    color: white;
+}
+/* o bloco de conteudo principal (direita da barra) */
+.dashboard-content {
+    flex-grow: 1;
+    background-color: #ffffff;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+/* Título do conteúdo */
+.dashboard-content h2 {
+    text-align: left;
+    margin-bottom: 1em;
+}
+.delete-section {
+    border-top: 1px solid #eee;
+    margin-top: 2em;
+    padding-top: 1.5em;
+}
+.delete-section h4 {
+    color: #dc3545;
+    margin-bottom: 0.5em;
+}
+.delete-section p {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 1em;
+}
+.btn-danger {
+    background-color: #dc3545;
+}
+.btn-danger:hover {
+    background-color: #a71d2a;
+}
+/* Alinhar o botão de logout no dashboard do cliente */
+.container-dashboard .logout-link {
+    float: right;
+    color: #ff4b00;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: -10px;
+}
+
+/* === CLASSES PARA A TABELA DE ADMIN === */
+/* A tabela de usuários */
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5em;
+}
+/* celulas e cabecalho da tabela */
+.user-table th,
+.user-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    vertical-align: middle;
+}
+.user-table th {
+    background-color: #f9f9f9;
+    color: #333;
+    font-weight: 600;
+}
+/* botao de remover dentro da tabela */
+.user-table .btn-danger {
+    width: auto;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+/* alertas/caixinhas */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-weight: bold;
+    text-align: center;
+}
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
 }

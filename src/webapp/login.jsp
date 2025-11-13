@@ -1,4 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
+<%
+    // Pega as mensagens do LoginServlet (se houver)
+    String msgErro = (String) request.getAttribute("mensagemErro");
+    String msgSucesso = (String) request.getAttribute("mensagemSucesso");
+%>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -8,8 +14,29 @@
 
     <link rel="stylesheet" href="estilo.css">
 
+    <style>
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+    </style>
+
 </head>
-<body>
+<body class="body-center-form">
 
 <header class="top-banner">
     <div class="banner-content">
@@ -17,15 +44,21 @@
     </div>
 </header>
 
-
-
-
 <div class="container">
+
+    <!-- BLOCO DE MENSAGENS -->
+    <% if (msgErro != null) { %>
+    <div class="alert alert-danger"><%= msgErro %></div>
+    <% } %>
+
+    <% if (msgSucesso != null) { %>
+    <div class="alert alert-success"><%= msgSucesso %></div>
+    <% } %>
+
 
     <h2>Fazer Login</h2>
 
     <form action="logar" method="POST">
-
 
         <div class="form-group">
             <label for="email">Email:</label>
@@ -43,7 +76,6 @@
             Não tem uma conta?
             <a href="/cadastro.jsp">Crie uma conta</a>
         </div>
-
 
     </form>
 

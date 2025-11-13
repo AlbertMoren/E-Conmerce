@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static config.Config.*;
 
-
-
-
 public class UsuarioDAO {
-
 
     static {
         try {
@@ -20,14 +16,10 @@ public class UsuarioDAO {
         }
     }
 
-
-
-
     // obtem os usuarios do banco
     public List<Usuario> obterTodos() {
         List<Usuario> resultado = new ArrayList<>();
-        String sql = "SELECT id, nome, email, senha FROM usuario";
-
+        String sql = "SELECT id_usuario, nome, email, endereco, senha, administrador FROM usuario";
 
         try (Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
              Statement statement = connection.createStatement();
@@ -35,17 +27,18 @@ public class UsuarioDAO {
 
             while (resultSet.next()) {
                 Usuario usuario = new Usuario();
-                usuario.setId(resultSet.getInt("id"));
+                usuario.setId_usuario(resultSet.getInt("id_usuario"));
                 usuario.setNome(resultSet.getString("nome"));
                 usuario.setEmail(resultSet.getString("email"));
                 usuario.setSenha(resultSet.getString("senha"));
+                usuario.setEndereco(resultSet.getString("endereco"));
+                usuario.setAdministrador(resultSet.getBoolean("administrador"));
                 resultado.add(usuario);
             }
 
         } catch (SQLException ex) {
             System.err.println("Erro ao listar usuários: " + ex.getMessage());
             ex.printStackTrace();
-
         }
         return resultado;
     }
@@ -53,7 +46,7 @@ public class UsuarioDAO {
     // obtem um usuario pelo id
     public Usuario obter(int id) {
         Usuario usuario = null;
-        String sql = "SELECT id, nome, email, senha FROM usuario WHERE id = ?";
+        String sql = "SELECT id_usuario, nome, email,endereco, senha, administrador FROM usuario WHERE id_usuario = ?";
 
         try (Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -63,10 +56,41 @@ public class UsuarioDAO {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     usuario = new Usuario();
-                    usuario.setId(resultSet.getInt("id"));
+                    usuario.setId_usuario(resultSet.getInt("id_usuario"));
                     usuario.setNome(resultSet.getString("nome"));
                     usuario.setEmail(resultSet.getString("email"));
                     usuario.setSenha(resultSet.getString("senha"));
+                    usuario.setEndereco(resultSet.getString("endereco"));
+                    usuario.setAdministrador(resultSet.getBoolean("administrador"));
+                }
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("Erro ao obter usuário: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+        return usuario;
+    }
+
+    // obtem um usuario pelo email
+    public Usuario obter(String email) {
+        Usuario usuario = null;
+        String sql = "SELECT id_usuario, nome, email,endereco, senha, administrador FROM usuario WHERE email = ?";
+
+        try (Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, email);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    usuario = new Usuario();
+                    usuario.setId_usuario(resultSet.getInt("id_usuario"));
+                    usuario.setNome(resultSet.getString("nome"));
+                    usuario.setEmail(resultSet.getString("email"));
+                    usuario.setSenha(resultSet.getString("senha"));
+                    usuario.setEndereco(resultSet.getString("endereco"));
+                    usuario.setAdministrador(resultSet.getBoolean("administrador"));
                 }
             }
 
@@ -119,6 +143,7 @@ public class UsuarioDAO {
     }
 
     // atualiza um usuario
+    //Falta alterar para poder editar o endereço e outros campos(Albert)
     public static boolean atualizar(String nome, String email, String senha, String emailantigo) {
         String sql = "UPDATE usuario SET nome = ?, email = ?, senha = ? WHERE email = ?";
 
@@ -129,6 +154,28 @@ public class UsuarioDAO {
             preparedStatement.setString(2, email);
             preparedStatement.setString(3, senha);
             preparedStatement.setString(4, emailantigo);
+
+            return (preparedStatement.executeUpdate() == 1);
+
+        } catch (SQLException ex) {
+            System.err.println("Erro ao atualizar usuário: " + ex.getMessage());
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    // atualiza um usuario com endereco
+    public static boolean atualizar(String nome, String email, String endereco, String senha, String emailantigo) {
+        String sql = "UPDATE usuario SET nome = ?, email = ?, endereco = ?, senha = ? WHERE email = ?";
+
+        try (Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, nome);
+            preparedStatement.setString(2, email);
+            preparedStatement.setString(3, endereco);
+            preparedStatement.setString(4, senha);
+            preparedStatement.setString(5, emailantigo);
 
             return (preparedStatement.executeUpdate() == 1);
 
