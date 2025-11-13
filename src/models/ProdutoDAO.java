@@ -28,14 +28,13 @@ public class ProdutoDAO {
 
             while (resultSet.next()) {
                 Produto produto = new Produto();
-                produto.getId_produto(resultSet.getInt("id"));
+                produto.setId_produto(resultSet.getInt("id_produto"));
                 produto.setDescricao(resultSet.getString("descricao"));
                 produto.setPreco(resultSet.getDouble("preco"));
                 produto.setQuantidade(resultSet.getInt("quantidade"));
                 
                 int idCategoria = resultSet.getInt("id_categoria");
                 Categoria categoria = categoriaDao.obterPorId(idCategoria);
-                categoria.setId(idCategoria);
 
                 produto.setCategoria(categoria);
                 resultado.add(produto);
@@ -63,7 +62,7 @@ public class ProdutoDAO {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     produto = new Produto();
-                    produto.getId_produto(resultSet.getInt("id_produto"));
+                    produto.setId_produto(resultSet.getInt("id_produto"));
                     produto.setDescricao(resultSet.getString("descricao"));
                     produto.setPreco(resultSet.getDouble("preco"));
                     produto.setQuantidade(resultSet.getInt("quantidade"));
@@ -83,7 +82,7 @@ public class ProdutoDAO {
     }
 
     //iNSERIR UM PRODUTO
-    public boolean inserir(String descricao, Double preco, int quantidade) {
+    public boolean inserir(String descricao, Double preco, int quantidade, int id_categoria) {
         String sql = "INSERT INTO produto (descricao, preco, quantidade, id_categoria) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
@@ -93,7 +92,7 @@ public class ProdutoDAO {
             preparedStatement.setDouble(2, preco);
             preparedStatement.setInt(3, quantidade);
             
-            preparedStatement.setInt(4, idCategoria);
+            preparedStatement.setInt(4, id_categoria);
 
             int linhasAfetadas = preparedStatement.executeUpdate();
             return linhasAfetadas == 1; 
