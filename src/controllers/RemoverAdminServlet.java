@@ -48,7 +48,7 @@ public class RemoverAdminServlet extends HttpServlet {
             request.setAttribute("mensagemErro", "Contas de administrador não podem ser removidas pelo painel de administrador.");
 
             // Retorna para o dashboard do cliente com a mensagem de erro
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/dashboardClient.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
             dispatcher.forward(request, response);
             return;
         }
