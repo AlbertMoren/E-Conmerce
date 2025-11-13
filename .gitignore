@@ -30,4 +30,5 @@ bin/
 .DS_Store
 # Project exclude paths
 /target/.idea/
+/target/
 .idea/
