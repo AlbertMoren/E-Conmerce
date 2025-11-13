@@ -18,9 +18,7 @@ public class Main {
         usuarioDAO.inserir("Fulano", "ciclano@email.com", "123");
         usuarioDAO.inserir("Ciclano", "fulano@email.com", "321");
 
-        int idCatEletronicos = 1;
-        int idCatPerifericos = 2;
-        int idCatHardware = 3;
+        categoriaDAO.inserir
 
         // inserir Produtos
         produtoDAO.inserir("Placa de Video RTX 4070", 4500.00, 10, idCatHardware);
