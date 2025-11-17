@@ -124,7 +124,7 @@ public class CategoriaDAO {
                 Categoria categoria = new Categoria();
 
                 // Mapeamento dos campos
-                categoria.setIdCategoria(resultSet.getInt("id_categoria"));
+                categoria.setId_cat(resultSet.getInt("id_categoria"));
                 categoria.setNome(resultSet.getString("nome"));
 
                 resultado.add(categoria);

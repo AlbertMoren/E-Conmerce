@@ -3,6 +3,7 @@ package models;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import static config.Config.*;
 
 public class CarrinhoDAO {
     private UsuarioDAO usuarioDao = new UsuarioDAO();

@@ -1,5 +1,7 @@
 package models;
 
+import java.math.BigDecimal;
+
 public class ItemCarrinho {
     private int idItem;
     private int quantidade;

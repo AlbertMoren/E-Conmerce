@@ -4,6 +4,7 @@ import java.sql.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import static config.Config.*;
 
 public class VendaProdutoDAO {
     private VendaDAO vendaDao = new VendaDAO();
@@ -44,7 +45,7 @@ public class VendaProdutoDAO {
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 
-                Venda vendaCabecalho = vendaDao.obter(idVenda); 
+                Venda vendaCabecalho = vendaDao.obterPorId(idVenda);
 
                 while (resultSet.next()) {
                     VendaProduto item = new VendaProduto();
@@ -86,11 +87,11 @@ public class VendaProdutoDAO {
                 item.setQuantidade(resultSet.getInt("quantidade"));
                 item.setPrecoUnitario(resultSet.getBigDecimal("preco_unitario"));
 
-                Venda venda = vendaDAO.obter(idVenda);
+                Venda venda = vendaDao.obterPorId(idVenda);
                 item.setVenda(venda); 
                 
-                Produto produto = produtoDAO.obter(idProduto);
-                item.setProduto(produto); 
+                Produto produto = produtoDao.obter(idProduto);
+                item.setProduto(produto);
             }
         }
     } catch (SQLException ex) {

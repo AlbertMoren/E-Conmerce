@@ -44,7 +44,7 @@ public class UsuarioDAO {
     }
 
     // obtem um usuario pelo id
-    public Usuario obter(int id) {
+    public Usuario obterPorId(int id) {
         Usuario usuario = null;
         String sql = "SELECT id_usuario, nome, email,endereco, senha, administrador FROM usuario WHERE id_usuario = ?";
 

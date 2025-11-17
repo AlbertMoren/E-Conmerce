@@ -4,7 +4,6 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        // é obrigatório inserir uma categoria no banco manualmente antes de testar
         povoarBD();
     }
 

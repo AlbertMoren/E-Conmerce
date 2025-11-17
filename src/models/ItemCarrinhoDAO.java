@@ -4,6 +4,7 @@ import java.sql.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import static config.Config.*;
 
 public class ItemCarrinhoDAO {
     private CarrinhoDAO carrinhoDao = new CarrinhoDAO();
@@ -19,7 +20,7 @@ public class ItemCarrinhoDAO {
             preparedStatement.setInt(1, idCarrinho);
             preparedStatement.setInt(2, idProduto);
             preparedStatement.setInt(3, quantidade);
-            preparedStatement.setBigDecimal(4, precoUnitario);
+            preparedStatement.setBigDecimal(4, BigDecimal.valueOf(precoUnitario));
 
             return preparedStatement.executeUpdate() == 1;
 
