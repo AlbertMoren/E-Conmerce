@@ -16,7 +16,7 @@ public class CategoriaDAO {
     }
 
     //Busca categoria por id
-    public Categoria obterPorId(int idCategoria) {
+    public static Categoria obterPorId(int idCategoria) {
         Categoria categoria = null;
         String sql = "SELECT id_categoria, nome FROM categoria WHERE id_categoria = ?;";
         

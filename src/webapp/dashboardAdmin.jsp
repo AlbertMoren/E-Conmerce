@@ -1,22 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%
-    // Bloco de segurança
-    // 1. Verificar se o usuário está logado
+
     if(session.getAttribute("usuarioLogado") == null){
         response.sendRedirect("login.jsp");
         return;
     }
 
-    // 2. VERIFICAR SE É ADMIN (IMPORTANTE!)
+
     Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
     if(isAdmin == null || !isAdmin) {
-        // Se não for admin, chuta para o dashboard de cliente
+
         response.sendRedirect("dashboard.jsp");
         return;
     }
 
-    // 3. Pegar a lista de usuários que o Servlet de listagem enviou
-    //    (Você precisaria de um 'ListarUsuariosServlet' para carregar esta página)
+
     java.util.List<models.Usuario> listaUsuarios = (java.util.List<models.Usuario>) request.getAttribute("listaDeUsuarios");
 %>
 <html>
@@ -80,8 +78,8 @@
                 </td>
             </tr>
             <%
-                    } // Fim do 'for'
-                } // Fim do 'if'
+                    }
+                }
             %>
             </tbody>
         </table>

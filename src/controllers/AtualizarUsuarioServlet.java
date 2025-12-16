@@ -15,65 +15,78 @@ import java.io.IOException;
 public class AtualizarUsuarioServlet extends HttpServlet {
 
     @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        HttpSession sessao = request.getSession(false);
+
+        if (sessao == null || sessao.getAttribute("usuarioLogado") == null) {
+            response.sendRedirect(request.getContextPath() + "/logar");
+            return;
+        }
+
+        request.getRequestDispatcher("/dashboardClient.jsp")
+                .forward(request, response);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession sessao = request.getSession(false); // Pega a sessão
+        HttpSession sessao = request.getSession(false);
 
-        // Verifica se o usuário esta logado
         if (sessao == null || sessao.getAttribute("usuarioLogado") == null) {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect(request.getContextPath() + "/logar");
             return;
         }
 
-        String emailLogado = (String) sessao.getAttribute("usuarioLogado");
 
-        // pega os dados do usuario logado
-        UsuarioDAO dao = new UsuarioDAO();
-        Usuario usuarioAtual = dao.obter(emailLogado);
+        Usuario usuarioLogado = (Usuario) sessao.getAttribute("usuarioLogado");
 
-        if (usuarioAtual == null) {
-            // Se o usuário foi deletado por outro admin, por exemplo
-            sessao.invalidate();
-            response.sendRedirect("login.jsp");
-            return;
-        }
+        String emailAntigo = usuarioLogado.getEmail();
 
-        // pega os dados novos do formulario
+        // dados do formulário
         String nomeForm = request.getParameter("nome_usuario");
         String emailForm = request.getParameter("email_usuario");
         String enderecoForm = request.getParameter("endereco_usuario");
         String senhaForm = request.getParameter("senha_usuario");
 
-        // Se o campo do formulario veio vazio, usa o valor antigo do banco
+        // mantém valores antigos se vier vazio
+        if (nomeForm == null || nomeForm.trim().isEmpty())
+            nomeForm = usuarioLogado.getNome();
 
-        if (nomeForm == null || nomeForm.trim().isEmpty()) {
-            nomeForm = usuarioAtual.getNome();
-        }
+        if (emailForm == null || emailForm.trim().isEmpty())
+            emailForm = usuarioLogado.getEmail();
 
-        if (emailForm == null || emailForm.trim().isEmpty()) {
-            emailForm = usuarioAtual.getEmail();
-        }
+        if (enderecoForm == null || enderecoForm.trim().isEmpty())
+            enderecoForm = usuarioLogado.getEndereco();
 
-        if (enderecoForm == null || enderecoForm.trim().isEmpty()) {
-            enderecoForm = usuarioAtual.getEndereco();
-        }
+        if (senhaForm == null || senhaForm.isEmpty())
+            senhaForm = usuarioLogado.getSenha();
 
-        if (senhaForm == null || senhaForm.isEmpty()) {
-            senhaForm = usuarioAtual.getSenha();
-        }
+        boolean sucesso = UsuarioDAO.atualizar(
+                nomeForm,
+                emailForm,
+                enderecoForm,
+                senhaForm,
+                emailAntigo
+        );
 
-        boolean sucesso = UsuarioDAO.atualizar(nomeForm, emailForm, enderecoForm, senhaForm, emailLogado);
+        if (sucesso) {
 
-        if(sucesso) {
-            // Se o email mudou, atualiza o email na sessão
-            sessao.setAttribute("usuarioLogado", emailForm);
+            usuarioLogado.setNome(nomeForm);
+            usuarioLogado.setEmail(emailForm);
+            usuarioLogado.setEndereco(enderecoForm);
+            usuarioLogado.setSenha(senhaForm);
+
+            sessao.setAttribute("usuarioLogado", usuarioLogado);
+
             request.setAttribute("mensagemSucesso", "Dados atualizados com sucesso!");
         } else {
             request.setAttribute("mensagemErro", "Erro ao atualizar. O novo e-mail pode já estar em uso.");
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/dashboardClient.jsp");
-        dispatcher.forward(request, response);
+        request.getRequestDispatcher("/dashboardClient.jsp")
+                .forward(request, response);
     }
 }

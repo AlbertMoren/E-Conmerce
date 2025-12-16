@@ -1,12 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%
-    // 1. Pega as mensagens enviadas pelo CadastroServlet
+
     String msgSucesso = (String) request.getAttribute("mensagemSucesso");
     String msgErro = (String) request.getAttribute("mensagemErro");
 
-    // 2. SE O CADASTRO FOI UM SUCESSO:
+
     if (msgSucesso != null) {
-        // Agenda um redirecionamento automático para o login.jsp após 3 segundos
+
         response.setHeader("Refresh", "3;url=login.jsp");
     }
 %>

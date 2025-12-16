@@ -12,44 +12,47 @@ import javax.servlet.http.HttpSession;
 
 
 // webservlet serve pra conectar a url ao código
-
 @WebServlet("/logar")
 public class LoginServlet extends HttpServlet {
+
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        request.getRequestDispatcher("/login.jsp")
+                .forward(request, response);
+    }
 
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // pega os dados preenchidos no login
         String email = request.getParameter("email_usuario");
         String senha = request.getParameter("senha_usuario");
 
-        // chama o dao
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        boolean loginValido = usuarioDAO.validarLogin(email, senha);
+
+        if (usuarioDAO.validarLogin(email, senha)) {
 
 
-        if (loginValido) {
-
-            boolean isAdmin = usuarioDAO.obter(email).getAdministrador();
+            var usuario = usuarioDAO.obter(email);
 
             HttpSession sessao = request.getSession(true);
-            sessao.setAttribute("usuarioLogado", email);
-            sessao.setAttribute("isAdmin", isAdmin);
+            sessao.setAttribute("usuarioLogado", usuario);
+            sessao.setAttribute("isAdmin", usuario.getAdministrador());
 
-            // redireciona para o dashboard correspondente
-            if (isAdmin) {
-                // redireciona para o Servlet que lista os usuarios para so depois ir para o dashboardAdmin
-                response.sendRedirect("admin/painel");
+            if (usuario.getAdministrador()) {
+                response.sendRedirect(request.getContextPath() + "/admin/painel");
             } else {
-                response.sendRedirect("dashboardClient.jsp");
+                response.sendRedirect(request.getContextPath() + "/inicio");
             }
 
         } else {
             request.setAttribute("mensagemErro", "E-mail ou senha inválidos.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
-            dispatcher.forward(request, response);
+            request.getRequestDispatcher("/login.jsp")
+                    .forward(request, response);
         }
     }
 }

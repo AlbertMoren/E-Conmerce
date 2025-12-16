@@ -3,8 +3,10 @@
   <component name="WebContextManager">
     <option name="state">
       <map>
+        <entry key="file://$PROJECT_DIR$/src/webapp/cabecalho.jsp" value="file://$PROJECT_DIR$/src/webapp" />
         <entry key="file://$PROJECT_DIR$/src/webapp/cadastro.jsp" value="file://$PROJECT_DIR$/src/webapp" />
         <entry key="file://$PROJECT_DIR$/src/webapp/dashboardAdmin.jsp" value="file://$PROJECT_DIR$/src/webapp" />
+        <entry key="file://$PROJECT_DIR$/src/webapp/home.jsp" value="file://$PROJECT_DIR$/src/webapp" />
         <entry key="file://$PROJECT_DIR$/src/webapp/login.jsp" value="file://$PROJECT_DIR$/src/webapp" />
       </map>
     </option>

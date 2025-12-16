@@ -16,7 +16,7 @@ public class ProdutoDAO {
     }
 
     //LISTA TODOS OS PRODUTOS
-    public List<Produto> obterTodos() {
+    public static List<Produto> obterTodos() {
         List<Produto> resultado = new ArrayList<>();
         String sql = "SELECT p.*, p.id_categoria FROM produto p;";
 
@@ -32,9 +32,9 @@ public class ProdutoDAO {
                 produto.setDescricao(resultSet.getString("descricao"));
                 produto.setPreco(resultSet.getDouble("preco"));
                 produto.setQuantidade(resultSet.getInt("quantidade"));
-                
+
                 int idCategoria = resultSet.getInt("id_categoria");
-                Categoria categoria = categoriaDao.obterPorId(idCategoria);
+                Categoria categoria = CategoriaDAO.obterPorId(idCategoria);
 
                 produto.setCategoria(categoria);
                 resultado.add(produto);

@@ -44,10 +44,10 @@ public class RemoverAdminServlet extends HttpServlet {
         // impedir remoção de Admin
         if (usuarioASerRemovido != null && usuarioASerRemovido.getAdministrador()) {
 
-            // Se o usuário logado for ADMIN, ele não pode se auto-remover por aqui.
+
             request.setAttribute("mensagemErro", "Contas de administrador não podem ser removidas pelo painel de administrador.");
 
-            // Retorna para o dashboard do cliente com a mensagem de erro
+
             RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
             dispatcher.forward(request, response);
             return;

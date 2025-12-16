@@ -1,18 +1,23 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page import="models.Usuario" %>
+
 <%
-    // Bloco de segurança (seu código original)
-    if(session.getAttribute("usuarioLogado") == null){
-        response.sendRedirect("login.jsp");
+
+    if (session == null || session.getAttribute("usuarioLogado") == null) {
+        response.sendRedirect(request.getContextPath() + "/logar");
         return;
     }
-    String emailDoUsuario = (String) session.getAttribute("usuarioLogado");
+
+
+    Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
 
     String msgSucesso = (String) request.getAttribute("mensagemSucesso");
     String msgErro = (String) request.getAttribute("mensagemErro");
 %>
+
 <html>
 <head>
-    <title>Minha Conta - <%= emailDoUsuario %></title>
+    <title>Minha Conta - <%= usuario.getEmail() %></title>
     <link rel="stylesheet" href="estilo.css">
 </head>
 
@@ -20,14 +25,15 @@
 
 <header class="top-banner">
     <div class="banner-content">
-        <a href="index.jsp"> <img src="assets/LOGO-ICON.png" alt="Logo Papoco" class="logo">
+        <a href="<%= request.getContextPath() %>/inicio">
+            <img src="assets/LOGO-ICON.png" alt="Logo Papoco" class="logo">
         </a>
     </div>
 </header>
 
 <div class="breadcrumb">
     <div class="breadcrumb-container">
-        <a href="index.jsp">HOME</a> / MINHA CONTA
+        <a href="<%= request.getContextPath() %>/inicio">HOME</a> / MINHA CONTA
     </div>
 </div>
 
@@ -36,8 +42,9 @@
     <nav class="dashboard-sidebar">
         <h3>Minha Conta</h3>
         <ul class="sidebar-menu">
-            <li class="active"><a href="dashboardClient.jsp">Meus Dados</a></li>
-            <li><a href="#">Meus Pedidos</a></li> <li><a href="logout.jsp">Sair</a></li>
+            <li class="active"><a href="#">Meus Dados</a></li>
+            <li><a href="#">Meus Pedidos</a></li>
+            <li><a href="<%= request.getContextPath() %>/logout">Sair</a></li>
         </ul>
     </nav>
 
@@ -48,28 +55,29 @@
             <%= msgSucesso %>
         </div>
         <% } %>
+
         <% if (msgErro != null) { %>
         <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 15px;">
             <%= msgErro %>
         </div>
         <% } %>
 
-        <form action="atualizar" method="POST">
+        <form action="<%= request.getContextPath() %>/atualizar" method="POST">
             <h2>Editar Dados Cadastrais</h2>
 
             <div class="form-group">
                 <label>Nome:</label>
-                <input type="text" name="nome_usuario">
+                <input type="text" name="nome_usuario" value="<%= usuario.getNome() %>">
             </div>
 
             <div class="form-group">
                 <label>Email:</label>
-                <input type="email" name="email_usuario" value="<%= emailDoUsuario %>">
+                <input type="email" name="email_usuario" value="<%= usuario.getEmail() %>">
             </div>
 
             <div class="form-group">
                 <label>Endereço:</label>
-                <input type="text" name="endereco_usuario">
+                <input type="text" name="endereco_usuario" value="<%= usuario.getEndereco() %>">
             </div>
 
             <div class="form-group">
@@ -81,7 +89,7 @@
         </form>
 
         <div class="delete-section">
-            <form action="remover" method="POST"
+            <form action="<%= request.getContextPath() %>/remover" method="POST"
                   onsubmit="return confirm('Tem certeza que deseja excluir sua conta permanentemente?');">
 
                 <h4>Remover Conta</h4>

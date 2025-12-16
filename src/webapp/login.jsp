@@ -74,8 +74,14 @@
 
         <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
             Não tem uma conta?
-            <a href="/cadastro.jsp">Crie uma conta</a>
+            <a href="/BancoDeDados_war_exploded/cadastro.jsp">Crie uma conta</a>
         </div>
+
+        <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+            Entrar sem login?
+            <a href="/BancoDeDados_war_exploded/inicio">Ver catálogo</a>
+        </div>
+
 
     </form>
 
