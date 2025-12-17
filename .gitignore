@@ -5,6 +5,10 @@ out/
 .kotlin
 src/config/Config.java
 
+target/
+.idea/
+*.iml
+
 ### Eclipse ###
 .apt_generated
 .classpath
@@ -29,5 +33,4 @@ bin/
 
 ### Mac OS ###
 .DS_Store
-# Project exclude paths
-/target/
+
