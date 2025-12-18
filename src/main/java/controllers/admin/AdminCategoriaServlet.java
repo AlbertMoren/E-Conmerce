@@ -36,23 +36,27 @@ public class AdminCategoriaServlet extends HttpServlet {
         boolean sucesso = false;
 
         try {
-        if ("remover".equals(acao)) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            sucesso = categoriaDAO.remover(id);
+            if ("remover".equals(acao)) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                sucesso = categoriaDAO.remover(id);
 
-        } else if ("cadastrar".equals(acao)) {
-            String nome = request.getParameter("nome");
-            sucesso = categoriaDAO.inserir(nome);
+            } else if ("cadastrar".equals(acao)) {
+                String nome = request.getParameter("nome");
+                sucesso = categoriaDAO.inserir(nome);
 
-        } else if ("atualizar".equals(acao)) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            String nome = request.getParameter("nome");
-            sucesso = categoriaDAO.atualizar(id, nome);
+            } else if ("atualizar".equals(acao)) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                String nome = request.getParameter("nome");
+                sucesso = categoriaDAO.atualizar(id, nome);
+            }
+        } catch (Exception e) {
+            sucesso = false;
+            e.printStackTrace();
         }
-    } catch (NumberFormatException ignored) { }
 
-        String msg = sucesso ? "Operação de " + acao + " realizada com sucesso!" : "Erro ao realizar " + acao;
-        request.getSession().setAttribute("mensagem", msg); // Guarda na sessão
+        String tipomsg = sucesso ? "mensagemSucesso" : "mensagemErro";
+        String msg = sucesso ? "Operação de " + acao + " categoria realizada com sucesso!" : "Erro ao realizar " + acao + " categoria!";
+        request.getSession().setAttribute(tipomsg, msg);
         response.sendRedirect(request.getContextPath() + "/admin/categorias");
     }
 }

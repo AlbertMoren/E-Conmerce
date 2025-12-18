@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ page import="models.produto.Produto" %>
 <%@include file="cabecalhoAdmin.jsp" %>
 <%@include file="menuLateral.jsp" %>
@@ -6,14 +7,21 @@
 %>
 <main class="dashboard-content">
     <%
-        String msg = (String) session.getAttribute("mensagem");
-        if (msg != null) {
+        String erro = (String) session.getAttribute("mensagemErro");
+        if (erro != null) session.removeAttribute("mensagemErro");
+
+        String sucesso = (String) session.getAttribute("mensagemSucesso");
+        if (sucesso != null) session.removeAttribute("mensagemSucesso");
     %>
-    <div class="alert alert-info"><%= msg %></div>
-    <%
-            session.removeAttribute("mensagem");
-        }
-    %>
+
+    <% if (erro != null) { %>
+    <div class="alert alert-danger"><%= erro %></div>
+    <% } %>
+
+    <% if (sucesso != null) { %>
+    <div class="alert alert-success"><%= sucesso %></div>
+    <% } %>
+
     <h2>Gerenciar Produtos</h2>
     <table class="user-table">
         <thead>

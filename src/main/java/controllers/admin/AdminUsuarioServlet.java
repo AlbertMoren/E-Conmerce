@@ -39,9 +39,12 @@ public class AdminUsuarioServlet extends HttpServlet {
         Usuario usuarioASerRemovido = dao.obter(emailParaRemover);
 
         if (usuarioASerRemovido != null && usuarioASerRemovido.getAdministrador()) {
-            request.setAttribute("mensagemErro", "Contas de administrador não podem ser removidas pelo painel de administrador.");
-            request.getRequestDispatcher("/admin/usuarios").forward(request, response);
+            //request.setAttribute("mensagemErro", "Contas de administrador não podem ser removidas pelo painel de administrador.");
+            //request.getRequestDispatcher("/admin/usuarios").forward(request, response);
 
+            sessao.setAttribute("mensagemErro", "Contas de administrador não podem ser removidas pelo painel.");
+            response.sendRedirect(request.getContextPath() + "/admin/usuarios");
+            return;
         } else {
             boolean sucesso = UsuarioDAO.remover(emailParaRemover);
             if (sucesso) {

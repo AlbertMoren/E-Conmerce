@@ -63,10 +63,14 @@ public class AdminProdutoServlet extends HttpServlet {
 
                 sucesso = produtoDAO.atualizar(id, descricao, preco, quantidade, idCategoria);
             }
-        } catch (NumberFormatException | NullPointerException ignored) { }
+        } catch (NumberFormatException | NullPointerException e) {
+            sucesso = false;
+            e.printStackTrace();
+        }
 
-        String msg = sucesso ? "Operação de " + acao + " realizada com sucesso!" : "Erro ao realizar " + acao;
-        request.getSession().setAttribute("mensagem", msg);
+        String tipomsg = sucesso ? "mensagemSucesso" : "mensagemErro";
+        String msg = sucesso ? "Operação de " + acao + " produto realizada com sucesso!" : "Erro ao realizar " + acao + " produto!";
+        request.getSession().setAttribute(tipomsg, msg);
         response.sendRedirect(request.getContextPath() + "/admin/produtos");
     }
 }

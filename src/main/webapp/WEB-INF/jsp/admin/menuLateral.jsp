@@ -1,4 +1,5 @@
-    <nav class="dashboard-sidebar">
+<%@ page pageEncoding="UTF-8" %>
+<nav class="dashboard-sidebar">
     <h3>Painel Admin</h3>
     <ul class="sidebar-menu">
         <li><a href="${pageContext.request.contextPath}/admin/usuarios">Gerenciar Usuários</a></li>

@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@include file="cabecalhoAdmin.jsp" %>
 <%@include file="menuLateral.jsp" %>
 <%
@@ -5,9 +6,11 @@
 %>
 <main class="dashboard-content">
     <%
-        String erro = (String) request.getAttribute("mensagemErro");
+        String erro = (String) session.getAttribute("mensagemErro");
+        if (erro != null) session.removeAttribute("mensagemErro");
+
         String sucesso = (String) session.getAttribute("mensagemSucesso");
-        if (sucesso != null) session.removeAttribute("mensagemSucesso"); // Limpa após exibir
+        if (sucesso != null) session.removeAttribute("mensagemSucesso");
     %>
 
     <% if (erro != null) { %>
