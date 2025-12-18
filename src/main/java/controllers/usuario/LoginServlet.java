@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
             sessao.setAttribute("usuarioLogado", usuario);
 
             if (usuario.getAdministrador()) {
-                request.getRequestDispatcher("/WEB-INF/jsp/admin/dashboardAdmin.jsp")
+                request.getRequestDispatcher("admin/usuarios")
                         .forward(request, response);
             } else {
                 request.getRequestDispatcher("/WEB-INF/jsp/account/dashboardClient.jsp")
@@ -53,3 +53,4 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
+

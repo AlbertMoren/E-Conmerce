@@ -75,7 +75,7 @@
         </form>
 
         <div class="delete-section">
-            <form action="<%= request.getContextPath() %>/remover" method="POST"
+            <form action="<%= request.getContextPath() %>/account/remover" method="POST"
                   onsubmit="return confirm('Tem certeza que deseja excluir sua conta permanentemente?');">
 
                 <h4>Remover Conta</h4>

@@ -23,7 +23,7 @@ public class AdminUsuarioServlet extends HttpServlet {
 
         request.setAttribute("listaDeUsuarios", listaUsuarios);
 
-        request.getRequestDispatcher("/WEB-INF/jsp/admin/dashboardAdmin.jsp")
+        request.getRequestDispatcher("/WEB-INF/jsp/admin/usuarios.jsp")
                 .forward(request, response);
     }
 

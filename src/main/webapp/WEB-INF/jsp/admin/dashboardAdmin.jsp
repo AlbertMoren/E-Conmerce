@@ -11,14 +11,14 @@
 <body class="body-dashboard">
     <header class="top-banner">
         <div class="banner-content">
-            <a href="/index.jsp">
+            <a href="${pageContext.request.contextPath}/home">
                 <img src="${pageContext.request.contextPath}/assets/LOGO-ICON.png" alt="Logo Papoco" class="logo">
             </a>
         </div>
     </header>
     <div class="breadcrumb">
         <div class="breadcrumb-container">
-            <a href="/index.jsp">HOME</a> / PAINEL ADMIN
+            <a href="${pageContext.request.contextPath}/home">HOME</a> / PAINEL ADMIN
         </div>
     </div>
     <div class="dashboard-wrapper">
@@ -35,7 +35,7 @@
 
         <main class="dashboard-content">
             <h2>Gerenciar Usuários</h2>
-            <p>Visão de todos os usuários cadastrados no sistema.</p>
+            <p>Visão de todos os usuáriosa     --- cadastrados no sistema.</p>
 
             <table class="user-table">
                 <thead>
@@ -57,8 +57,9 @@
                     <td><%= user.getEmail() %></td>
                     <td><%= user.getAdministrador() ? "Admin" : "Cliente" %></td>
                     <td>
-                        <form action="/removerAdmin" method="POST" onsubmit="return confirm('Remover este usuário?');">
+                        <form action="${pageContext.request.contextPath}/admin/usuarios" method="POST" onsubmit="return confirm('Remover este usuário?');">
                             <input type="hidden" name="email_para_remover" value="<%= user.getEmail() %>">
+                            <input type="hidden" name="acao" value="remover">
                             <button type="submit" class="btn-danger">Remover</button>
                         </form>
                     </td>

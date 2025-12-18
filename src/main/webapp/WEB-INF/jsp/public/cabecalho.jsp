@@ -56,6 +56,15 @@
         height: 65px;
     }
 </style>
+<script>
+    (function() {
+        var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+        link.type = 'image/x-icon';
+        link.rel = 'shortcut icon';
+        link.href = '<%= request.getContextPath() %>/favicon.ico';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    })();
+</script>
 
 <%
     Usuario usuario = null;
@@ -76,7 +85,7 @@
         <a href="<%= request.getContextPath() %>/login">Fazer Login</a>
         <% } else { %>
         <span class="user-name">Olá, <%= usuario.getNome() %></span>
-        <a href="<%= request.getContextPath() %>/account/update">Minha conta</a>
+        <a href='<%= request.getContextPath() %>/<%= usuario.getAdministrador() ? "admin/usuarios" : "account/update" %>'>Minha conta</a>
         <a href="<%= request.getContextPath() %>/logout">Sair</a>
         <% } %>
     </nav>

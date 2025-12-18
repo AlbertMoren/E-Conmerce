@@ -5,11 +5,21 @@
     java.util.List<models.categoria.Categoria> listaCategorias = (java.util.List<Categoria>) request.getAttribute("listaDeCategorias");
 %>
 <main class="dashboard-content">
+    <%
+        String msg = (String) session.getAttribute("mensagem");
+        if (msg != null) {
+    %>
+    <div class="alert alert-info"><%= msg %></div>
+    <%
+            session.removeAttribute("mensagem");
+        }
+    %>
     <h2>Gerenciar Categorias</h2>
     <table class="user-table">
         <thead>
         <tr>
             <th>Nome</th>
+            <th>Ação</th>
         </tr>
         </thead>
 
@@ -36,4 +46,4 @@
     </table>
 </main>
 
-<%@include file="../public/rodape.jsp" %>
+<%@include file="rodapeAdmin.jsp" %>

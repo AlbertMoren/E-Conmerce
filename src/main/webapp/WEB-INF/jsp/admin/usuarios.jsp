@@ -4,6 +4,20 @@
     java.util.List<models.usuario.Usuario> listaUsuarios = (java.util.List<models.usuario.Usuario>) request.getAttribute("listaDeUsuarios");
 %>
 <main class="dashboard-content">
+    <%
+        String erro = (String) request.getAttribute("mensagemErro");
+        String sucesso = (String) session.getAttribute("mensagemSucesso");
+        if (sucesso != null) session.removeAttribute("mensagemSucesso"); // Limpa após exibir
+    %>
+
+    <% if (erro != null) { %>
+    <div class="alert alert-danger"><%= erro %></div>
+    <% } %>
+
+    <% if (sucesso != null) { %>
+    <div class="alert alert-success"><%= sucesso %></div>
+    <% } %>
+
     <h2>Gerenciar Usuários</h2>
     <table class="user-table">
         <thead>
@@ -40,4 +54,4 @@
     </table>
 </main>
 
-<%@include file="../public/rodape.jsp" %>
+<%@include file="rodapeAdmin.jsp" %>

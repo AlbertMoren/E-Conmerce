@@ -5,6 +5,15 @@
     java.util.List<models.produto.Produto> listaProdutos = (java.util.List<Produto>) request.getAttribute("listaDeProdutos");
 %>
 <main class="dashboard-content">
+    <%
+        String msg = (String) session.getAttribute("mensagem");
+        if (msg != null) {
+    %>
+    <div class="alert alert-info"><%= msg %></div>
+    <%
+            session.removeAttribute("mensagem");
+        }
+    %>
     <h2>Gerenciar Produtos</h2>
     <table class="user-table">
         <thead>
@@ -13,6 +22,7 @@
             <th>Preço</th>
             <th>Quantidade</th>
             <th>Categoria</th>
+            <th>Ação</th>
         </tr>
         </thead>
 
@@ -42,4 +52,4 @@
     </table>
 </main>
 
-<%@include file="../public/rodape.jsp" %>
+<%@include file="rodapeAdmin.jsp" %>

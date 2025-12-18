@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import models.usuario.Usuario;
 
+@jakarta.servlet.annotation.WebFilter("/*")
 public class SegurancaFilter implements Filter {
 
     public SegurancaFilter() {
@@ -20,10 +21,24 @@ public class SegurancaFilter implements Filter {
                          FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
+        if (req.getRequestURI().endsWith("favicon.ico") || req.getRequestURI().contains("/assets/")) {
+            chain.doFilter(request, response);
+            return;
+        }
         if (req.getRequestURI().startsWith(req.getContextPath() + "/account/")
                 || req.getRequestURI().startsWith(req.getContextPath() + "/admin/")) {
             HttpSession session = req.getSession();
-            if (session.getAttribute("usuario") != null && session.getAttribute("usuario") instanceof Usuario) {
+
+            if (req.getRequestURI().startsWith(req.getContextPath() + "/account/update")) {
+                Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+                if (usuario != null && usuario.getAdministrador()) {
+                    request.setAttribute("mensagemErro", "Administradores não podem editar perfis de clientes por aqui.");
+                    request.getRequestDispatcher("/WEB-INF/jsp/admin/usuarios").forward(request, response);
+                    return;
+                }
+            }
+
+            if (session.getAttribute("usuarioLogado") != null && session.getAttribute("usuarioLogado") instanceof Usuario) {
                 Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
                 if (req.getRequestURI().startsWith(req.getContextPath() + "/admin/") && usuario.getAdministrador() == true) {
                     chain.doFilter(req, response);

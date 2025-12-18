@@ -1,5 +1,3 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 </div>
 
 <footer style="text-align: center; padding: 20px; color: #666; font-size: 14px;">

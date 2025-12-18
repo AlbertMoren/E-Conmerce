@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Login</title>
@@ -59,7 +60,7 @@
 
     <h2>Fazer Login</h2>
 
-    <form action="<%= request.getContextPath()%>login" method="POST">
+    <form action="<%= request.getContextPath()%>/login" method="POST">
 
         <div class="form-group">
             <label for="email">Email:</label>
