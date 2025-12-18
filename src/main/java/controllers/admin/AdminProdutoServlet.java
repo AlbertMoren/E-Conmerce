@@ -1,4 +1,3 @@
-
 package controllers.admin;
 
 import jakarta.servlet.ServletException;
@@ -6,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import models.categoria.Categoria;
 import models.categoria.CategoriaDAO;
 import models.produto.Produto;
@@ -15,6 +15,11 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/admin/produtos")
+@jakarta.servlet.annotation.MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
+        maxFileSize = 1024 * 1024 * 10,      // 10 MB
+        maxRequestSize = 1024 * 1024 * 15    // 15 MB
+)
 public class AdminProdutoServlet extends HttpServlet {
 
     @Override
@@ -47,14 +52,18 @@ public class AdminProdutoServlet extends HttpServlet {
                 sucesso = ProdutoDAO.remover(id);
 
             } else if ("cadastrar".equals(acao)) {
+                System.out.println("Cadastrando produto");
                 String descricao = request.getParameter("descricao");
                 Double preco = Double.parseDouble(request.getParameter("preco"));
+                Part foto = request.getPart("foto");
                 int quantidade = Integer.parseInt(request.getParameter("quantidade"));
                 int idCategoria = Integer.parseInt(request.getParameter("id_categoria"));
 
-                sucesso = produtoDAO.inserir(descricao, preco, quantidade, idCategoria);
+                sucesso = produtoDAO.inserir(descricao, preco,foto, quantidade, idCategoria);
+                System.out.println(sucesso);
 
             } else if ("atualizar".equals(acao)) {
+                System.out.println("Atualizando produto");
                 int id = Integer.parseInt(request.getParameter("id"));
                 String descricao = request.getParameter("descricao");
                 Double preco = Double.parseDouble(request.getParameter("preco"));
@@ -63,7 +72,7 @@ public class AdminProdutoServlet extends HttpServlet {
 
                 sucesso = produtoDAO.atualizar(id, descricao, preco, quantidade, idCategoria);
             }
-        } catch (NumberFormatException | NullPointerException e) {
+        } catch (Exception e) {
             sucesso = false;
             e.printStackTrace();
         }

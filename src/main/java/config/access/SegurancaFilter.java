@@ -21,10 +21,14 @@ public class SegurancaFilter implements Filter {
                          FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
-        if (req.getRequestURI().endsWith("favicon.ico") || req.getRequestURI().contains("/assets/")) {
+
+        if (req.getRequestURI().endsWith("favicon.ico")
+                || req.getRequestURI().contains("/assets/")
+                || req.getRequestURI().contains("/public/")) {
             chain.doFilter(request, response);
             return;
         }
+
         if (req.getRequestURI().startsWith(req.getContextPath() + "/account/")
                 || req.getRequestURI().startsWith(req.getContextPath() + "/admin/")) {
             HttpSession session = req.getSession();

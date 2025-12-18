@@ -8,15 +8,17 @@ public class Produto {
     private Double preco;
     private int quantidade;
     private Categoria categoria;
+    private String foto;
 
     public Produto(){};
 
-    public Produto(int id, String descricao, Double preco, int quantidade, Categoria categoria){
+    public Produto(int id, String descricao, Double preco, int quantidade, Categoria categoria, String foto){
         this.id_produto = id;
         this.descricao = descricao;
         this.preco = preco;
         this.quantidade = quantidade;
         this.categoria = categoria;
+        this.foto = foto;
     }
 
     public int getId_produto() {return id_produto; }
@@ -29,5 +31,6 @@ public class Produto {
     public void setQuantidade(int quantidade) {this.quantidade = quantidade;}
     public Categoria getCategoria() {return categoria;}
     public void setCategoria(Categoria categoria) {this.categoria = categoria;}
-    
+    public String getFoto() {return foto;}
+    public void setFoto(String foto) {this.foto = foto;}
 }

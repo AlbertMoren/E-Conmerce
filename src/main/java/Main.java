@@ -20,16 +20,16 @@ public class Main {
         usuarioDAO.inserir("Fulano", "ciclano@email.com", "123");
         usuarioDAO.inserir("Ciclano", "fulano@email.com", "321");
 
-        int idCatEletronicos = 1;
-        int idCatPerifericos = 2;
-        int idCatHardware = 3;
+        //int idCatEletronicos = 1;
+        //int idCatPerifericos = 2;
+        //int idCatHardware = 3;
         
         // inserir Produtos
-        produtoDAO.inserir("Placa de Video RTX 4070", 4500.00, 10, idCatHardware);
-        produtoDAO.inserir("Processador Ryzen 7 7800X3D", 2800.00, 15, idCatHardware);
-        produtoDAO.inserir("Mouse Gamer Logitech G502", 350.00, 30, idCatPerifericos);
-        produtoDAO.inserir("Teclado Mecânico Redragon", 299.90, 20, idCatPerifericos);
-        produtoDAO.inserir("Monitor Ultrawide 29'", 1100.00, 8, idCatEletronicos);
+        //produtoDAO.inserir("Placa de Video RTX 4070", 4500.00, 10, idCatHardware);
+        //produtoDAO.inserir("Processador Ryzen 7 7800X3D", 2800.00, 15, idCatHardware);
+        //produtoDAO.inserir("Mouse Gamer Logitech G502", 350.00, 30, idCatPerifericos);
+        //produtoDAO.inserir("Teclado Mecânico Redragon", 299.90, 20, idCatPerifericos);
+        //produtoDAO.inserir("Monitor Ultrawide 29'", 1100.00, 8, idCatEletronicos);
     }
 
 }

@@ -5,6 +5,7 @@
         <li><a href="${pageContext.request.contextPath}/admin/usuarios">Gerenciar Usuários</a></li>
         <li><a href="${pageContext.request.contextPath}/admin/categorias">Gerenciar Categorias</a></li>
         <li><a href="${pageContext.request.contextPath}/admin/produtos">Gerenciar Produtos</a></li>
+        <li><a href="${pageContext.request.contextPath}/admin/estoque" target="_blank">Relatório de produtos (PDF)</a></li>
         <li><a href="${pageContext.request.contextPath}/logout">Sair</a></li>
     </ul>
     </nav>
