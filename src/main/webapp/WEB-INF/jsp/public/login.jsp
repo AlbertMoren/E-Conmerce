@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%
-    // Pega as mensagens do LoginServlet (se houver)
     String msgErro = (String) request.getAttribute("mensagemErro");
     String msgSucesso = (String) request.getAttribute("mensagemSucesso");
 %>
@@ -12,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Login</title>
 
-    <link rel="stylesheet" href="../../../../webapp/estilo.css">
+    <link rel="stylesheet" href="../../../webapp/estilo.css">
 
     <style>
         .alert {
@@ -40,7 +39,7 @@
 
 <header class="top-banner">
     <div class="banner-content">
-        <img src="../../../../webapp/assets/LOGO-ICON.png" alt="Logo Papoco" class="logo">
+        <img src="${pageContext.request.contextPath}/assets/LOGO-ICON.png" alt="Logo Papoco" class="logo">
     </div>
 </header>
 

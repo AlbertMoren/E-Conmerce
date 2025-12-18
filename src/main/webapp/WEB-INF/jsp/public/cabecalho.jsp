@@ -62,19 +62,20 @@
 
 <header class="site-header">
     <div class="logo">
-        Papoco
+        <a href="<%= request.getContextPath() %>/home">
+            <img src="${pageContext.request.contextPath}/assets/LOGO-ICON.png" alt="Logo Papoco" class="logo">
+        </a>
     </div>
 
     <nav class="nav-links">
         <% if (usuario == null) { %>
-        <a href="<%= request.getContextPath() %>/logar">Fazer Login</a>
+        <a href="<%= request.getContextPath() %>/login">Fazer Login</a>
         <% } else { %>
         <span class="user-name">Olá, <%= usuario.getNome() %></span>
-        <a href="<%= request.getContextPath() %>/atualizar">Minha conta</a>
+        <a href="<%= request.getContextPath() %>/account/update">Minha conta</a>
         <a href="<%= request.getContextPath() %>/logout">Sair</a>
         <% } %>
     </nav>
 </header>
-
 
 <div class="header-spacer"></div>

@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/account/atualizar")
+@WebServlet("/account/update")
 public class AtualizarUsuarioServlet extends HttpServlet {
 
     @Override
@@ -26,7 +26,6 @@ public class AtualizarUsuarioServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession sessao = request.getSession(false);
-
         Usuario usuarioLogado = (Usuario) sessao.getAttribute("usuarioLogado");
 
         String emailAntigo = usuarioLogado.getEmail();
@@ -65,8 +64,6 @@ public class AtualizarUsuarioServlet extends HttpServlet {
             usuarioLogado.setEndereco(enderecoForm);
             usuarioLogado.setSenha(senhaForm);
 
-            sessao.setAttribute("usuarioLogado", usuarioLogado);
-            usuarioLogado.setEmail(emailForm); // Atualiza o objeto Java
             sessao.setAttribute("usuarioLogado", usuarioLogado); // Devolve para a sessão
 
             request.setAttribute("mensagemSucesso", "Dados atualizados com sucesso!");

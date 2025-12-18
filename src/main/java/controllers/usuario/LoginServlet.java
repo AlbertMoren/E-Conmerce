@@ -10,20 +10,17 @@ import java.io.IOException;
 
 import jakarta.servlet.http.HttpSession;
 
-
 // webservlet serve pra conectar a url ao código
-@WebServlet("/logar")
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        request.getRequestDispatcher("/login.jsp")
+        request.getRequestDispatcher("/WEB-INF/jsp/public/login.jsp")
                 .forward(request, response);
     }
-
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -36,22 +33,20 @@ public class LoginServlet extends HttpServlet {
 
         if (usuarioDAO.validarLogin(email, senha)) {
 
-
             var usuario = usuarioDAO.obter(email);
 
             HttpSession sessao = request.getSession(true);
             sessao.setAttribute("usuarioLogado", usuario);
-            sessao.setAttribute("isAdmin", usuario.getAdministrador());
 
             if (usuario.getAdministrador()) {
-                response.sendRedirect(request.getContextPath() + "/admin/painel");
+                response.sendRedirect(request.getContextPath() + "/admin/dashboardAdmin");
             } else {
-                response.sendRedirect(request.getContextPath() + "/inicio");
+                response.sendRedirect(request.getContextPath() + "/account/dashboardClient");
             }
 
         } else {
-            request.setAttribute("mensagemErro", "E-mail ou senha inválidos.");
-            request.getRequestDispatcher("/login.jsp")
+            request.setAttribute("mensagemErro", "Email ou senha inválidos.");
+            request.getRequestDispatcher("/WEB-INF/jsp/public/login.jsp")
                     .forward(request, response);
         }
     }

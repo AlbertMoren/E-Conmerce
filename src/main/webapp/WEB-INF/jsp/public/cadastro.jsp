@@ -16,11 +16,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criar Conta</title>
-    <link rel="stylesheet" href="../../../webapp/estilo.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/estilo.css">
 </head>
 <body class="body-center-form"> <header class="top-banner">
     <div class="banner-content">
-        <a href="index.jsp"> <img src="../../../webapp/assets/LOGO-ICON.png" alt="Logo Papoco" class="logo"></a>
+        <a href="index.jsp"> <img src="${pageContext.request.contextPath}/assets/LOGO-ICON.png" alt="Logo Papoco" class="logo"></a>
     </div>
 </header>
 

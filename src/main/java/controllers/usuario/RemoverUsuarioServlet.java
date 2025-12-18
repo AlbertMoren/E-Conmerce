@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/remover")
+@WebServlet("/account/remover")
 public class RemoverUsuarioServlet extends HttpServlet {
 
     @Override
@@ -20,23 +20,16 @@ public class RemoverUsuarioServlet extends HttpServlet {
 
         HttpSession sessao = request.getSession(false);
 
-        // Verifica se existe sessão e usuário logado
-        if (sessao == null || sessao.getAttribute("usuarioLogado") == null) {
-            response.sendRedirect("login.jsp");
-            return;
-        }
-
         Usuario usuarioLogado = (Usuario) sessao.getAttribute("usuarioLogado");
 
         boolean sucesso = UsuarioDAO.remover(usuarioLogado.getEmail());
 
         if (sucesso) {
-            // invalida a sessão após remover
             sessao.invalidate();
-            response.sendRedirect("login.jsp");
+            response.sendRedirect( request.getContextPath() + "/login?msg=conta_removida");
         } else {
             request.setAttribute("mensagemErro", "Erro ao remover a conta.");
-            request.getRequestDispatcher("/dashboardClient.jsp")
+            request.getRequestDispatcher("/WEB-INF/jsp/account/dashboardClient.jsp")
                     .forward(request, response);
         }
     }

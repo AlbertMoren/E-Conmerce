@@ -27,13 +27,9 @@
 <hr>
 
 <%
-
     List<Produto> lista = (List<Produto>) request.getAttribute("produtos");
 
-
     if (lista != null && !lista.isEmpty()) {
-
-
         for (Produto p : lista) {
 %>
 
@@ -46,12 +42,11 @@
 
     <p>Estoque: <%= p.getQuantidade() %></p>
 
-
 </div>
 
 <%
-    }
-} else {
+        }
+    } else {
 %>
 <p>Nenhum produto encontrado no banco de dados.</p>
 <%
