@@ -1,4 +1,7 @@
 package models.produto;
+import models.categoria.Categoria;
+import models.categoria.CategoriaDAO;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

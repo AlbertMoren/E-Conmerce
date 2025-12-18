@@ -1,5 +1,8 @@
 package models.carrinho;
 
+import models.usuario.Usuario;
+import models.usuario.UsuarioDAO;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +46,7 @@ public class CarrinhoDAO {
                 carrinho.setStatus(resultSet.getString("status"));
 
                 int idUsuario = resultSet.getInt("id_usuario");
-                Usuario usuario = usuarioDao.obterPorId(idUsuario); 
+                Usuario usuario = usuarioDao.obterPorId(idUsuario);
                 
                 carrinho.setUsuario(usuario); 
                 

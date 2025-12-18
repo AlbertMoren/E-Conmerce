@@ -1,5 +1,10 @@
 package models.itemCarrinho;
 
+import models.carrinho.Carrinho;
+import models.carrinho.CarrinhoDAO;
+import models.produto.Produto;
+import models.produto.ProdutoDAO;
+
 import java.sql.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -55,7 +60,7 @@ public class ItemCarrinhoDAO {
                     item.setCarrinho(carrinhoCabecalho); 
                 
                     int idProduto = resultSet.getInt("id_produto");
-                    Produto produto = produtoDao.obter(idProduto); 
+                    Produto produto = produtoDao.obter(idProduto);
                     item.setProduto(produto); 
                     
                     resultado.add(item);

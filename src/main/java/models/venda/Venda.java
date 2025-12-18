@@ -1,4 +1,6 @@
-package models.vendaProduto;
+package models.venda;
+
+import models.usuario.Usuario;
 
 import java.sql.Timestamp;
 import java.math.BigDecimal;
@@ -12,7 +14,7 @@ public class Venda {
 
     public Venda(){}
 
-    public Venda(int idVenda, Usuario usuario, Timestamp dataHora, BigDecimal valorTotal,String status) {
+    public Venda(int idVenda, Usuario usuario, Timestamp dataHora, BigDecimal valorTotal, String status) {
         this.idVenda = idVenda;
         this.usuario = usuario;
         this.dataHora = dataHora;

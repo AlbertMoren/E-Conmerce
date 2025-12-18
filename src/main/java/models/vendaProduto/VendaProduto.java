@@ -2,6 +2,9 @@ package models.vendaProduto;
 
 import java.math.BigDecimal;
 
+import models.produto.Produto;
+import models.venda.Venda;
+
 public class VendaProduto {
     private Venda venda;
     private Produto produto;

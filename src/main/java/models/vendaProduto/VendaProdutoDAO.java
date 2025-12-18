@@ -1,5 +1,10 @@
 package models.vendaProduto;
 
+import models.produto.Produto;
+import models.produto.ProdutoDAO;
+import models.venda.Venda;
+import models.venda.VendaDAO;
+
 import java.sql.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -11,7 +16,7 @@ public class VendaProdutoDAO {
     private ProdutoDAO produtoDao = new ProdutoDAO();
 
     // Inserir Item Vendido
-    // Este método é chamado para cada item quando uma venda é finalizada.
+    // Este metodo e chamado para cada item quando uma venda e finalizada.
     public boolean inserir(int idVenda, int idProduto, int quantidade, BigDecimal precoUnitario) { 
         String sql = "INSERT INTO venda_produto (id_venda, id_produto, quantidade, preco_unitario) VALUES (?, ?, ?, ?)";
 
@@ -33,7 +38,7 @@ public class VendaProdutoDAO {
     }
 
     // Obter Itens por ID da Venda 
-    // Método essencial para detalhar o conteúdo de uma venda específica.
+    // Metodo essencial para detalhar o conteudo de uma venda especifica.
     public List<VendaProduto> obterItensPorVenda(int idVenda) {
         List<VendaProduto> resultado = new ArrayList<>();
         String sql = "SELECT * FROM venda_produto WHERE id_venda = ?;"; 

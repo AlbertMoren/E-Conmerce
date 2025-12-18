@@ -1,5 +1,8 @@
 package models.itemCarrinho;
 
+import models.carrinho.Carrinho;
+import models.produto.Produto;
+
 import java.math.BigDecimal;
 
 public class ItemCarrinho {

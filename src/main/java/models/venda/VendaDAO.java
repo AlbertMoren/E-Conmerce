@@ -1,5 +1,8 @@
 package models.venda;
 
+import models.usuario.Usuario;
+import models.usuario.UsuarioDAO;
+
 import java.sql.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -57,7 +60,7 @@ public class VendaDAO {
 
                 int idUsuario = resultSet.getInt("id_usuario");
                 
-                Usuario usuario = usuarioDao.obterPorId(idUsuario); 
+                Usuario usuario = usuarioDao.obterPorId(idUsuario);
                 venda.setUsuario(usuario); 
                 
                 resultado.add(venda);

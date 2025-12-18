@@ -17,7 +17,7 @@ public class AtualizarUsuarioServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        request.getRequestDispatcher("/dashboardClient.jsp")
+        request.getRequestDispatcher("/WEB-INF/jsp/account/dashboardClient.jsp")
                 .forward(request, response);
     }
 
@@ -27,23 +27,17 @@ public class AtualizarUsuarioServlet extends HttpServlet {
 
         HttpSession sessao = request.getSession(false);
 
-        if (sessao == null || sessao.getAttribute("usuarioLogado") == null) {
-            response.sendRedirect(request.getContextPath() + "/logar");
-            return;
-        }
-
-
         Usuario usuarioLogado = (Usuario) sessao.getAttribute("usuarioLogado");
 
         String emailAntigo = usuarioLogado.getEmail();
 
-        // dados do formulário
+        // dados do formulario
         String nomeForm = request.getParameter("nome_usuario");
         String emailForm = request.getParameter("email_usuario");
         String enderecoForm = request.getParameter("endereco_usuario");
         String senhaForm = request.getParameter("senha_usuario");
 
-        // mantém valores antigos se vier vazio
+        // mantem valores antigos se vier vazio
         if (nomeForm == null || nomeForm.trim().isEmpty())
             nomeForm = usuarioLogado.getNome();
 
@@ -72,13 +66,15 @@ public class AtualizarUsuarioServlet extends HttpServlet {
             usuarioLogado.setSenha(senhaForm);
 
             sessao.setAttribute("usuarioLogado", usuarioLogado);
+            usuarioLogado.setEmail(emailForm); // Atualiza o objeto Java
+            sessao.setAttribute("usuarioLogado", usuarioLogado); // Devolve para a sessão
 
             request.setAttribute("mensagemSucesso", "Dados atualizados com sucesso!");
         } else {
             request.setAttribute("mensagemErro", "Erro ao atualizar. O novo e-mail pode já estar em uso.");
         }
 
-        request.getRequestDispatcher("/dashboardClient.jsp")
+        request.getRequestDispatcher("/WEB-INF/jsp/account/dashboardClient.jsp")
                 .forward(request, response);
     }
 }

@@ -1,4 +1,6 @@
 package models.carrinho;
+import models.usuario.Usuario;
+
 import java.sql.Timestamp;
 
 public class Carrinho {
