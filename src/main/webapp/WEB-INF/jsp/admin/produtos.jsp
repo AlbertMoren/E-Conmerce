@@ -1,30 +1,35 @@
+<%@ page import="models.produto.Produto" %>
 <%@include file="cabecalhoAdmin.jsp" %>
 <%@include file="menuLateral.jsp" %>
-
+<%
+    java.util.List<models.produto.Produto> listaProdutos = (java.util.List<Produto>) request.getAttribute("listaDeProdutos");
+%>
 <main class="dashboard-content">
-    <h2>Gerenciar Usuários</h2>
+    <h2>Gerenciar Produtos</h2>
     <table class="user-table">
         <thead>
         <tr>
             <th>Nome</th>
-            <th>Email</th>
-            <th>Tipo</th>
-            <th>Ação</th>
+            <th>Preço</th>
+            <th>Quantidade</th>
+            <th>Categoria</th>
         </tr>
         </thead>
 
         <tbody>
         <%
-            if (listaUsuarios != null) {
-                for (models.usuario.Usuario user : listaUsuarios) {
+            if (listaProdutos != null) {
+                for (models.produto.Produto produto : listaProdutos) {
         %>
         <tr>
-            <td><%= user.getNome() %></td>
-            <td><%= user.getEmail() %></td>
-            <td><%= user.getAdministrador() ? "Admin" : "Cliente" %></td>
+            <td><%= produto.getDescricao() %></td>
+            <td><%= produto.getPreco() %></td>
+            <td><%= produto.getQuantidade() %></td>
+            <td><%= produto.getCategoria().getNome() %></td>
             <td>
-                <form action="/removerAdmin" method="POST" onsubmit="return confirm('Remover este usuário?');">
-                    <input type="hidden" name="email_para_remover" value="<%= user.getEmail() %>">
+                <form action="${pageContext.request.contextPath}/admin/produtos" method="POST" onsubmit="return confirm('Remover este produto?');">
+                    <input type="hidden" name="id" value="<%= produto.getId_produto() %>">
+                    <input type="hidden" name="acao" value="remover">
                     <button type="submit" class="btn-danger">Remover</button>
                 </form>
             </td>

@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Painel Admin</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/estilo.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/estilo.css">
 </head>
 <body class="body-dashboard">
 <header class="top-banner">

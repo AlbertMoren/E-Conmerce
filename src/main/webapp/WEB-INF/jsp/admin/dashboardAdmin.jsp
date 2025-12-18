@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>Painel Admin - Gerenciar Usuários</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/estilo.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/estilo.css">
 </head>
 
 <body class="body-dashboard">

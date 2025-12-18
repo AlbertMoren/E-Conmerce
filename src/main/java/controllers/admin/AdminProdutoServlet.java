@@ -14,7 +14,7 @@ import models.produto.ProdutoDAO;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/admin/produto")
+@WebServlet("/admin/produtos")
 public class AdminProdutoServlet extends HttpServlet {
 
     @Override
@@ -67,6 +67,6 @@ public class AdminProdutoServlet extends HttpServlet {
 
         String msg = sucesso ? "Operação de " + acao + " realizada com sucesso!" : "Erro ao realizar " + acao;
         request.getSession().setAttribute("mensagem", msg);
-        response.sendRedirect(request.getContextPath() + "/admin/produto");
+        response.sendRedirect(request.getContextPath() + "/admin/produtos");
     }
 }

@@ -2,7 +2,11 @@
 <%@ page import="models.usuario.Usuario" %>
 
 <style>
-
+    .logo {
+        max-height: 40px;
+        width: auto;
+        display: block;
+    }
     .site-header {
         position: fixed;
         top: 0;

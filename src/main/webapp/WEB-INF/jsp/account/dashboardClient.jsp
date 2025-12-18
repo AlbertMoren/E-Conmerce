@@ -1,39 +1,25 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%@ page import="models.Usuario" %>
+<%@ page import="models.usuario.Usuario" %>
 
 <%
-
-    if (session == null || session.getAttribute("usuarioLogado") == null) {
-        response.sendRedirect(request.getContextPath() + "/logar");
-        return;
-    }
-
-
     Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
 
     String msgSucesso = (String) request.getAttribute("mensagemSucesso");
     String msgErro = (String) request.getAttribute("mensagemErro");
 %>
 
+<jsp:include page="../public/cabecalho.jsp" />
 <html>
 <head>
     <title>Minha Conta - <%= usuario.getEmail() %></title>
-    <link rel="stylesheet" href="../../../../webapp/estilo.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/estilo.css">
 </head>
 
 <body class="body-dashboard">
 
-<header class="top-banner">
-    <div class="banner-content">
-        <a href="<%= request.getContextPath() %>/inicio">
-            <img src="../../../../webapp/assets/LOGO-ICON.png" alt="Logo Papoco" class="logo">
-        </a>
-    </div>
-</header>
-
 <div class="breadcrumb">
     <div class="breadcrumb-container">
-        <a href="<%= request.getContextPath() %>/inicio">HOME</a> / MINHA CONTA
+        <a href="<%= request.getContextPath() %>/home">HOME</a> / MINHA CONTA
     </div>
 </div>
 
@@ -62,7 +48,7 @@
         </div>
         <% } %>
 
-        <form action="<%= request.getContextPath() %>/atualizar" method="POST">
+        <form action="<%= request.getContextPath() %>/account/update" method="POST">
             <h2>Editar Dados Cadastrais</h2>
 
             <div class="form-group">

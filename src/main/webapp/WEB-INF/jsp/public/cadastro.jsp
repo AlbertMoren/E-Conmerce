@@ -16,11 +16,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criar Conta</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/estilo.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/estilo.css">
 </head>
 <body class="body-center-form"> <header class="top-banner">
     <div class="banner-content">
-        <a href="index.jsp"> <img src="${pageContext.request.contextPath}/assets/LOGO-ICON.png" alt="Logo Papoco" class="logo"></a>
+            <a href="<%= request.getContextPath() %>/home">
+            <img src="${pageContext.request.contextPath}/assets/LOGO-ICON.png" alt="Logo Papoco" class="logo"></a>
     </div>
 </header>
 
@@ -54,7 +55,7 @@
 
         <div style="text-align: center; margin-top: 20px;">
             Já tem uma conta?
-            <a href="../../../webapp/login.jsp">Fazer login</a>
+            <a href="<%= request.getContextPath() %>/login">Fazer login</a>
         </div>
     </form>
 </div>

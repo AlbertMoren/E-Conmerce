@@ -11,7 +11,7 @@ import models.categoria.CategoriaDAO;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/admin/categoria")
+@WebServlet("/admin/categorias")
 public class AdminCategoriaServlet extends HttpServlet {
 
     @Override
@@ -53,6 +53,6 @@ public class AdminCategoriaServlet extends HttpServlet {
 
         String msg = sucesso ? "Operação de " + acao + " realizada com sucesso!" : "Erro ao realizar " + acao;
         request.getSession().setAttribute("mensagem", msg); // Guarda na sessão
-        response.sendRedirect(request.getContextPath() + "/admin/categoria");
+        response.sendRedirect(request.getContextPath() + "/admin/categorias");
     }
 }

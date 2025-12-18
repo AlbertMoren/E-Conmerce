@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Login</title>
 
-    <link rel="stylesheet" href="../../../webapp/estilo.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/estilo.css">
 
     <style>
         .alert {
@@ -39,7 +39,9 @@
 
 <header class="top-banner">
     <div class="banner-content">
+        <a href="<%= request.getContextPath() %>/home">
         <img src="${pageContext.request.contextPath}/assets/LOGO-ICON.png" alt="Logo Papoco" class="logo">
+        </a>
     </div>
 </header>
 
@@ -57,7 +59,7 @@
 
     <h2>Fazer Login</h2>
 
-    <form action="logar" method="POST">
+    <form action="<%= request.getContextPath()%>login" method="POST">
 
         <div class="form-group">
             <label for="email">Email:</label>
@@ -73,15 +75,13 @@
 
         <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
             Não tem uma conta?
-            <a href="/BancoDeDados_war_exploded/cadastro.jsp">Crie uma conta</a>
+            <a href="<%= request.getContextPath() %>/cadastrar">Crie uma conta</a>
         </div>
 
         <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
             Entrar sem login?
-            <a href="/BancoDeDados_war_exploded/inicio">Ver catálogo</a>
+            <a href="<%= request.getContextPath() %>/home">Ver catálogo</a>
         </div>
-
-
     </form>
 
 </div> </body>

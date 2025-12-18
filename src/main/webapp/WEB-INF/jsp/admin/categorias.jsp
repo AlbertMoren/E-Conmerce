@@ -1,16 +1,39 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: mslms
-  Date: 12/18/25
-  Time: 4:54 AM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+<%@ page import="models.categoria.Categoria" %>
+<%@include file="cabecalhoAdmin.jsp" %>
+<%@include file="menuLateral.jsp" %>
+<%
+    java.util.List<models.categoria.Categoria> listaCategorias = (java.util.List<Categoria>) request.getAttribute("listaDeCategorias");
+%>
+<main class="dashboard-content">
+    <h2>Gerenciar Categorias</h2>
+    <table class="user-table">
+        <thead>
+        <tr>
+            <th>Nome</th>
+        </tr>
+        </thead>
 
-</body>
-</html>
+        <tbody>
+        <%
+            if (listaCategorias != null) {
+                for (models.categoria.Categoria categoria : listaCategorias) {
+        %>
+        <tr>
+            <td><%= categoria.getNome() %></td>
+            <td>
+                <form action="${pageContext.request.contextPath}/admin/categorias" method="POST" onsubmit="return confirm('Remover esta categoria?');">
+                    <input type="hidden" name="id" value="<%= categoria.getId_cat() %>">
+                    <input type="hidden" name="acao" value="remover">
+                    <button type="submit" class="btn-danger">Remover</button>
+                </form>
+            </td>
+        </tr>
+        <%
+                }
+            }
+        %>
+        </tbody>
+    </table>
+</main>
+
+<%@include file="../public/rodape.jsp" %>

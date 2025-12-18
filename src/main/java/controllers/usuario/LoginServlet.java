@@ -39,9 +39,11 @@ public class LoginServlet extends HttpServlet {
             sessao.setAttribute("usuarioLogado", usuario);
 
             if (usuario.getAdministrador()) {
-                response.sendRedirect(request.getContextPath() + "/admin/dashboardAdmin");
+                request.getRequestDispatcher("/WEB-INF/jsp/admin/dashboardAdmin.jsp")
+                        .forward(request, response);
             } else {
-                response.sendRedirect(request.getContextPath() + "/account/dashboardClient");
+                request.getRequestDispatcher("/WEB-INF/jsp/account/dashboardClient.jsp")
+                        .forward(request, response);
             }
 
         } else {
