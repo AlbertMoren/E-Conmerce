@@ -42,6 +42,7 @@ public class ProdutoDAO {
                 produto.setDescricao(resultSet.getString("descricao"));
                 produto.setPreco(resultSet.getDouble("preco"));
                 produto.setQuantidade(resultSet.getInt("quantidade"));
+                produto.setFoto(resultSet.getString("foto"));
 
                 int idCategoria = resultSet.getInt("id_categoria");
                 Categoria categoria = CategoriaDAO.obterPorId(idCategoria);
@@ -76,6 +77,7 @@ public class ProdutoDAO {
                     produto.setDescricao(resultSet.getString("descricao"));
                     produto.setPreco(resultSet.getDouble("preco"));
                     produto.setQuantidade(resultSet.getInt("quantidade"));
+                    produto.setFoto(resultSet.getString("foto"));
 
                     int idCategoria = resultSet.getInt("id_categoria");
                     Categoria categoria = categoriaDao.obterPorId(idCategoria);
