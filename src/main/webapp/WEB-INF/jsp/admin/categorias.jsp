@@ -49,7 +49,7 @@
             <form action="${pageContext.request.contextPath}/admin/categorias" method="POST" class="row g-3">
                 <input type="hidden" name="acao" value="cadastrar">
                 <div class="col-md-8 col-lg-6">
-                    <input type="text" name="nome" class="form-control" placeholder="Nome da categoria (ex: Camisas)" required>
+                    <input type="text" name="nome" class="form-control" placeholder="Nome da categoria" required>
                 </div>
                 <div class="col-auto">
                     <button type="submit" class="btn btn-success px-4">
@@ -83,19 +83,19 @@
                             <input type="text" name="nome" value="<%= cat.getNome() %>" class="form-control form-control-sm w-75" required>
 
                             <button type="submit" class="btn btn-warning btn-sm text-dark px-3 fw-bold">
-                                Atualizar
+                                <i class="bi bi-save me-1"></i> Salvar
                             </button>
                         </form>
                     </td>
 
                     <td>
                         <div class="d-flex justify-content-center">
-                            <form action="${pageContext.request.contextPath}/admin/categorias" method="POST" class="m-0" onsubmit="return confirm('Excluir esta categoria permanentemente?');">
+                            <form action="${pageContext.request.contextPath}/admin/categorias" method="POST" class="m-0" onsubmit="return confirm('Excluir esta categoria?');">
                                 <input type="hidden" name="id" value="<%= cat.getId_cat() %>">
                                 <input type="hidden" name="acao" value="remover">
 
                                 <button type="submit" class="btn btn-outline-danger btn-sm px-3">
-                                    Remover
+                                    <i class="bi bi-trash3 me-1"></i> Remover
                                 </button>
                             </form>
                         </div>

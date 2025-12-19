@@ -3,6 +3,7 @@
     <title>Painel Admin</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/estilo.css">
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 </head>
 <body class="body-dashboard">
 <header class="top-banner">

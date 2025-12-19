@@ -18,7 +18,7 @@
         if (sucesso != null) session.removeAttribute("mensagemSucesso");
     %>
 
-    <h2 class="h3 mb-4">Gerenciar Produtos</h2>
+    <h2 class="h3 mb-0  text-gray-800">Gerenciar Produtos</h2>
 
     <div class="card shadow-sm mb-5">
         <div class="card-header bg-dark text-white font-weight-bold">Novo Produto</div>
@@ -87,12 +87,14 @@
                 <td><input type="number" name="quantidade" value="<%= p.getQuantidade() %>" class="form-control form-control-sm"></td>
                 <td>
                     <div class="d-flex gap-1 justify-content-center">
-                        <button type="submit" class="btn btn-warning btn-sm">Salvar</button>
+                        <button type="submit" class="btn btn-warning btn-sm">
+                            <i class="bi bi-save me-1"></i> Salvar</button>
                         </form>
                         <form action="${pageContext.request.contextPath}/admin/produtos" method="POST" class="m-0">
                             <input type="hidden" name="id" value="<%= p.getId_produto() %>">
                             <input type="hidden" name="acao" value="remover">
-                            <button type="submit" class="btn btn-danger btn-sm">Remover</button>
+                            <button type="submit" class="btn btn-outline-danger btn-sm px-3">
+                                    <i class="bi bi-trash3 me-1"></i> Remover</button>
                         </form>
                     </div>
                 </td>
