@@ -1,4 +1,4 @@
-# E-Conmerce
+# E-Commerce
 
 ## Equipe
 
