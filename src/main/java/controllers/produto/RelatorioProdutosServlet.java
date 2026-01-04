@@ -18,6 +18,7 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 
 @WebServlet("/admin/estoque")
 public class RelatorioProdutosServlet extends HttpServlet {
@@ -43,27 +44,61 @@ public class RelatorioProdutosServlet extends HttpServlet {
             float margin = 50;
             float yStart = mediaBox.getUpperRightY() - margin;
             float y = yStart;
-            float leading = 16;
+
+            // --- CONFIGURAÇÕES VISUAIS ---
+            float leading = 25;
+            float[] cols = {50, 100, 310, 440, 510, 560};
+            PDType1Font fontBold = new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD);
+            PDType1Font fontNormal = new PDType1Font(Standard14Fonts.FontName.HELVETICA);
 
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
             try {
-                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 16);
+                // --- TÍTULO (AGORA PADRONIZADO) ---
+                // Mudei de Courier para Helvetica Bold (Tamanho 18)
+                contentStream.setFont(fontBold, 18);
+                contentStream.setNonStrokingColor(0f, 0f, 0f); // Garante preto
                 contentStream.beginText();
                 contentStream.newLineAtOffset(margin, y);
                 contentStream.showText("Relatório de Produtos");
                 contentStream.endText();
 
-                y -= leading * 2;
+                y -= 40; // Espaço maior depois do título para respirar
 
-                // Cabeçalho
-                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
+                // --- CABEÇALHO ---
+                contentStream.setFont(fontBold, 12);
+
+                // 1. Fundo Azul Escuro
+                contentStream.setNonStrokingColor(44/255f, 62/255f, 80/255f);
+                contentStream.addRect(cols[0], y - leading + 5, cols[5] - cols[0], leading);
+                contentStream.fill();
+
+                // 2. Texto/Linhas Brancas
+                contentStream.setStrokingColor(1f, 1f, 1f);
+                contentStream.setNonStrokingColor(1f, 1f, 1f);
+
+                // 3. Bordas
+                contentStream.addRect(cols[0], y - leading + 5, cols[5] - cols[0], leading);
+                contentStream.stroke();
+                for (float x : cols) {
+                    contentStream.moveTo(x, y + 5);
+                    contentStream.lineTo(x, y - leading + 5);
+                    contentStream.stroke();
+                }
+
+                // 4. Texto
                 contentStream.beginText();
-                contentStream.newLineAtOffset(margin, y);
-                contentStream.showText("ID    Descrição                      Categoria                Preço     Qtde");
+                contentStream.newLineAtOffset(cols[0] + 5, y - 12);
+                contentStream.showText("ID");
+                contentStream.newLineAtOffset(cols[1] - cols[0], 0); contentStream.showText("Descrição");
+                contentStream.newLineAtOffset(cols[2] - cols[1], 0); contentStream.showText("Categoria");
+                contentStream.newLineAtOffset(cols[3] - cols[2], 0); contentStream.showText("Preço");
+                contentStream.newLineAtOffset(cols[4] - cols[3], 0); contentStream.showText("Qtde");
                 contentStream.endText();
 
                 y -= leading;
-                contentStream.setFont(PDType1Font.HELVETICA, 12);
+                contentStream.setFont(fontNormal, 12);
+
+                boolean zebrado = false;
 
                 for (Produto p : produtos) {
                     if (y < margin + leading) {
@@ -72,38 +107,62 @@ public class RelatorioProdutosServlet extends HttpServlet {
                         document.addPage(page);
                         y = yStart;
                         contentStream = new PDPageContentStream(document, page);
-                        contentStream.setFont(PDType1Font.HELVETICA, 12);
+                        contentStream.setFont(fontNormal, 12);
                     }
 
-                    String descricao = p.getDescricao() != null ? p.getDescricao() : "";
-                    Categoria cat = p.getCategoria();
-                    String categoria = (cat != null && cat.getNome() != null) ? cat.getNome() : "";
+                    if (zebrado) {
+                        contentStream.setNonStrokingColor(230/255f, 230/255f, 230/255f);
+                    } else {
+                        contentStream.setNonStrokingColor(248/255f, 248/255f, 248/255f);
+                    }
+                    contentStream.addRect(cols[0], y - leading + 5, cols[5] - cols[0], leading);
+                    contentStream.fill();
+
+                    contentStream.setNonStrokingColor(0f, 0f, 0f);
+                    contentStream.setStrokingColor(1f, 1f, 1f);
+
+                    contentStream.addRect(cols[0], y - leading + 5, cols[5] - cols[0], leading);
+                    contentStream.stroke();
+                    for (float x : cols) {
+                        contentStream.moveTo(x, y + 5);
+                        contentStream.lineTo(x, y - leading + 5);
+                        contentStream.stroke();
+                    }
+
+                    String descricao = truncate(p.getDescricao(), 30);
+                    String categoria = truncate(p.getCategoria() != null ? p.getCategoria().getNome() : "", 22);
                     String preco = String.format("R$ %.2f", p.getPreco());
                     String quantidade = String.valueOf(p.getQuantidade());
-
-                    String linha = String.format("%-5s %-30s %-22s %10s %5s",
-                            String.valueOf(p.getId_produto()),
-                            truncate(descricao, 30),
-                            truncate(categoria, 22),
-                            preco,
-                            quantidade);
+                    String id = String.valueOf(p.getId_produto());
 
                     contentStream.beginText();
-                    contentStream.newLineAtOffset(margin, y);
-                    contentStream.showText(linha);
+                    contentStream.newLineAtOffset(cols[0] + 5, y - 12);
+                    contentStream.showText(id);
+                    contentStream.newLineAtOffset(cols[1] - cols[0], 0);
+                    contentStream.showText(descricao);
+                    contentStream.newLineAtOffset(cols[2] - cols[1], 0);
+                    contentStream.showText(categoria);
+                    contentStream.newLineAtOffset(cols[3] - cols[2], 0);
+                    contentStream.showText(preco);
+                    contentStream.newLineAtOffset(cols[4] - cols[3], 0);
+                    contentStream.showText(quantidade);
                     contentStream.endText();
+
                     y -= leading;
+                    zebrado = !zebrado;
                 }
             } finally {
-                if (contentStream != null) {
-                    contentStream.close();
-                }
+                contentStream.close();
             }
 
             try (OutputStream out = resp.getOutputStream()) {
                 document.save(out);
                 out.flush();
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ServletException(e);
         }
     }
 
@@ -112,4 +171,3 @@ public class RelatorioProdutosServlet extends HttpServlet {
         return s.length() <= max ? s : s.substring(0, max - 1) + "…";
     }
 }
-
