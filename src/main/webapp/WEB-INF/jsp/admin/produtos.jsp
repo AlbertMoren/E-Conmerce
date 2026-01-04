@@ -35,7 +35,7 @@
                     <input type="number" name="preco" step="0.01" class="form-control" required>
                 </div>
                 <div class="col-md-2">
-                    <label class="form-label">Qtd</label>
+                    <label class="form-label">Quantidade</label>
                     <input type="number" name="quantidade" class="form-control" required>
                 </div>
                 <div class="col-md-4">
@@ -65,10 +65,44 @@
                 <th>Foto</th>
                 <th>Descrição</th>
                 <th>Preço</th>
-                <th>Qtd</th>
+                <th>Quantidade</th>
+                <th>Categoria</th>
                 <th>Ações</th>
             </tr>
             </thead>
+
+<%--            <tbody>--%>
+<%--            <% if (listaProdutos != null) {--%>
+<%--                for (models.produto.Produto p : listaProdutos) { %>--%>
+<%--            <tr>--%>
+<%--                <td>--%>
+<%--                    <img src="${pageContext.request.contextPath}/public/mostrarFotoProduto?id=<%= p.getId_produto() %>"--%>
+<%--                         alt="Foto" style="width: 50px; height: 50px; object-fit: cover;" class="rounded border">--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <form action="${pageContext.request.contextPath}/admin/produtos" method="POST" class="m-0">--%>
+<%--                        <input type="hidden" name="id" value="<%= p.getId_produto() %>">--%>
+<%--                        <input type="hidden" name="acao" value="atualizar">--%>
+<%--                        <input type="text" name="descricao" value="<%= p.getDescricao() %>" class="form-control form-control-sm">--%>
+<%--                </td>--%>
+<%--                <td><input type="number" name="preco" step="0.01" value="<%= p.getPreco() %>" class="form-control form-control-sm"></td>--%>
+<%--                <td><input type="number" name="quantidade" value="<%= p.getQuantidade() %>" class="form-control form-control-sm"></td>--%>
+<%--                <td>--%>
+<%--                    <div class="d-flex gap-1 justify-content-center">--%>
+<%--                        <button type="submit" class="btn btn-warning btn-sm">--%>
+<%--                            <i class="bi bi-save me-1"></i> Salvar</button>--%>
+<%--                        </form>--%>
+<%--                        <form action="${pageContext.request.contextPath}/admin/produtos" method="POST" class="m-0">--%>
+<%--                            <input type="hidden" name="id" value="<%= p.getId_produto() %>">--%>
+<%--                            <input type="hidden" name="acao" value="remover">--%>
+<%--                            <button type="submit" class="btn btn-outline-danger btn-sm px-3">--%>
+<%--                                    <i class="bi bi-trash3 me-1"></i> Remover</button>--%>
+<%--                        </form>--%>
+<%--                    </div>--%>
+<%--                </td>--%>
+<%--            </tr>--%>
+<%--            <% } } %>--%>
+<%--            </tbody>--%>
             <tbody>
             <% if (listaProdutos != null) {
                 for (models.produto.Produto p : listaProdutos) { %>
@@ -78,7 +112,7 @@
                          alt="Foto" style="width: 50px; height: 50px; object-fit: cover;" class="rounded border">
                 </td>
                 <td>
-                    <form action="${pageContext.request.contextPath}/admin/produtos" method="POST" class="m-0">
+                    <form action="${pageContext.request.contextPath}/admin/produtos" method="POST" enctype="multipart/form-data" class="m-0">
                         <input type="hidden" name="id" value="<%= p.getId_produto() %>">
                         <input type="hidden" name="acao" value="atualizar">
                         <input type="text" name="descricao" value="<%= p.getDescricao() %>" class="form-control form-control-sm">
@@ -86,21 +120,40 @@
                 <td><input type="number" name="preco" step="0.01" value="<%= p.getPreco() %>" class="form-control form-control-sm"></td>
                 <td><input type="number" name="quantidade" value="<%= p.getQuantidade() %>" class="form-control form-control-sm"></td>
                 <td>
-                    <div class="d-flex gap-1 justify-content-center">
+                <select name="id_categoria" class="form-select" required>
+                    <option value="<%= p.getCategoria().getId_cat() %>"><%= p.getCategoria().getNome() %></option>
+                    <% if(cats != null) { for(models.categoria.Categoria c : cats) { %>
+                        <% if (c.getId_cat() != p.getCategoria().getId_cat() ) { %>
+                            <option value="<%= c.getId_cat() %>"><%= c.getNome() %></option>
+                        <% } %>
+                    <% } } %>
+                </select>
+                </td>
+                <td>
+                    <div class="d-flex gap-1 justify-content-center align-items-center">
+
+                        <input type="file" name="foto" id="input-foto-<%= p.getId_produto() %>" class="d-none" accept="image/*">
+
+                        <label for="input-foto-<%= p.getId_produto() %>" class="btn btn-outline-secondary btn-sm" title="Alterar Foto" style="cursor: pointer;">
+                            <i class="bi bi-camera"></i>
+                        </label>
+
                         <button type="submit" class="btn btn-warning btn-sm">
-                            <i class="bi bi-save me-1"></i> Salvar</button>
-                        </form>
-                        <form action="${pageContext.request.contextPath}/admin/produtos" method="POST" class="m-0">
-                            <input type="hidden" name="id" value="<%= p.getId_produto() %>">
-                            <input type="hidden" name="acao" value="remover">
-                            <button type="submit" class="btn btn-outline-danger btn-sm px-3">
-                                    <i class="bi bi-trash3 me-1"></i> Remover</button>
-                        </form>
+                            <i class="bi bi-save me-1"></i>
+                        </button>
+                        </form> <form action="${pageContext.request.contextPath}/admin/produtos" method="POST" class="m-0">
+                        <input type="hidden" name="id" value="<%= p.getId_produto() %>">
+                        <input type="hidden" name="acao" value="remover">
+                        <button type="submit" class="btn btn-outline-danger btn-sm px-3">
+                            <i class="bi bi-trash3"></i>
+                        </button>
+                    </form>
                     </div>
                 </td>
             </tr>
             <% } } %>
             </tbody>
+
         </table>
     </div>
 </main>

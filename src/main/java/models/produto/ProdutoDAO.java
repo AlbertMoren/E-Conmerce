@@ -158,8 +158,11 @@ public class ProdutoDAO {
     }
 
     //Atualizar produto
-    public boolean atualizar(int id, String descricao, Double preco, int quantidade, int idCategoria){
+    public boolean atualizar(int produtoId, String descricao, Double preco, Part foto, int quantidade, int idCategoria){
+        boolean sucesso = false;
         String sql = "UPDATE produto SET descricao = ?, preco = ?, quantidade = ?, id_categoria = ? WHERE id_produto = ?";
+
+        String UPLOAD_DIRETORIO = "/home/mslms/Projects/SMD/E-Conmerce/pictures/";
 
         try(Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -169,18 +172,47 @@ public class ProdutoDAO {
             preparedStatement.setInt(3, quantidade);
             preparedStatement.setInt(4, idCategoria);
 
-            preparedStatement.setInt(5, id);
+            preparedStatement.setInt(5, produtoId);
 
-            int linhasAfetadas = preparedStatement.executeUpdate();
+            int rowsAffected = preparedStatement.executeUpdate();
 
-            return linhasAfetadas == 1;
 
-        } catch (SQLException ex) {
+            if (rowsAffected == 1 && foto != null && foto.getSize() > 0) {
+                // Criar nome: ID + extensão original
+                String originalName = foto.getSubmittedFileName();
+                String extensao = originalName.substring(originalName.lastIndexOf("."));
+                String nomeFinalArquivo = produtoId + extensao;
+
+                File arquivoDestino = new File(UPLOAD_DIRETORIO, nomeFinalArquivo);
+
+                try (InputStream input = foto.getInputStream()) {
+                    Files.copy(input, arquivoDestino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                }
+
+                // Atualiza o nome da foto no banco usando o ID correto
+                String sqlUpdate = "UPDATE produto SET foto = ? WHERE id_produto = ?";
+                try (PreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate)) {
+                    stmtUpdate.setString(1, nomeFinalArquivo);
+                    stmtUpdate.setLong(2, produtoId);
+                    stmtUpdate.executeUpdate();
+                }
+                sucesso = true;
+            } else if (rowsAffected == 1 && (foto == null || foto.getSize() == 0)) {
+                sucesso = true; // Sucesso mesmo sem foto
+            }
+
+            if (sucesso) {
+                connection.commit();
+            } else {
+                connection.rollback();
+            }
+
+        } catch (IOException | SQLException ex) {
             System.err.println("Erro ao atualizar produto: " + ex.getMessage());
             ex.printStackTrace();
             return false;
         }
-
+        return sucesso;
     }
 
     //REMOVER PRODUTO PELO id

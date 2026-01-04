@@ -67,10 +67,11 @@ public class AdminProdutoServlet extends HttpServlet {
                 int id = Integer.parseInt(request.getParameter("id"));
                 String descricao = request.getParameter("descricao");
                 Double preco = Double.parseDouble(request.getParameter("preco"));
+                Part foto = request.getPart("foto");
                 int quantidade = Integer.parseInt(request.getParameter("quantidade"));
                 int idCategoria = Integer.parseInt(request.getParameter("id_categoria"));
 
-                sucesso = produtoDAO.atualizar(id, descricao, preco, quantidade, idCategoria);
+                sucesso = produtoDAO.atualizar(id, descricao, preco,foto, quantidade, idCategoria);
             }
         } catch (Exception e) {
             sucesso = false;
