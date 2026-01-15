@@ -81,6 +81,7 @@
     </div>
 
     <nav class="nav-links">
+        <a href="<%= request.getContextPath() %>/carrinho">Carrinho</a>
         <% if (usuario == null) { %>
         <a href="<%= request.getContextPath() %>/login">Fazer Login</a>
         <% } else { %>

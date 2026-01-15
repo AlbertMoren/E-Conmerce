@@ -123,4 +123,45 @@ public final class CarrinhoCompras {
         return cookie;
     }
 
+    public static Cookie atualizarQuantidade(int produtoId, int novaQuantidade, Cookie cookie) {
+        if (novaQuantidade <= 0) {
+            return removerItem(produtoId, cookie);
+        }
+
+        String itens = cookie.getValue();
+        if (itens == null || itens.trim().isEmpty()) {
+            return cookie;
+        }
+
+        String novaString = "";
+        if (itens.contains(CARRINHO_COMPRAS_SEPARADOR_ITENS)) {
+            String[] itensArray = itens.split(CARRINHO_COMPRAS_SEPARADOR_ITENS);
+            for (int i = 0; i < itensArray.length; i++) {
+                String[] camposArray = itensArray[i].split(CARRINHO_COMPRAS_SEPARADOR_CAMPOS);
+                int id = Integer.parseInt(camposArray[0]);
+                int qtd = Integer.parseInt(camposArray[1]);
+
+                if (id == produtoId) {
+                    qtd = novaQuantidade;
+                }
+                novaString = novaString + id + CARRINHO_COMPRAS_SEPARADOR_CAMPOS + qtd + CARRINHO_COMPRAS_SEPARADOR_ITENS;
+            }
+        } else {
+            String[] camposArray = itens.split(CARRINHO_COMPRAS_SEPARADOR_CAMPOS);
+            int id = Integer.parseInt(camposArray[0]);
+            int qtd = Integer.parseInt(camposArray[1]);
+
+            if (id == produtoId) {
+                qtd = novaQuantidade;
+            }
+            novaString = id + CARRINHO_COMPRAS_SEPARADOR_CAMPOS + qtd + CARRINHO_COMPRAS_SEPARADOR_ITENS;
+        }
+
+        if (novaString.endsWith(CARRINHO_COMPRAS_SEPARADOR_ITENS)) {
+            novaString = novaString.substring(0, novaString.length() - 1);
+        }
+        cookie.setValue(novaString);
+        return cookie;
+    }
+
 }

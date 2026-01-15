@@ -8,6 +8,9 @@
         <a href="${pageContext.request.contextPath}/admin/usuarios" class="list-group-item list-group-item-action bg-dark text-white border-0 py-3 px-4">
             <i class="bi bi-people me-3"></i> Usuários
         </a>
+        <a href="${pageContext.request.contextPath}/admin/compras" class="list-group-item list-group-item-action bg-dark text-white border-0 py-3 px-4">
+            <i class="bi bi-receipt-cutoff me-3"></i> Compras
+        </a>
         <a href="${pageContext.request.contextPath}/admin/categorias" class="list-group-item list-group-item-action bg-dark text-white border-0 py-3 px-4">
             <i class="bi bi-tags me-3"></i> Categorias
         </a>

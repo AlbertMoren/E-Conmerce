@@ -8,7 +8,6 @@ import models.venda.Venda;
 public class VendaProduto {
     private Venda venda;
     private Produto produto;
-    
     private int quantidade;
     private BigDecimal precoUnitario;
 

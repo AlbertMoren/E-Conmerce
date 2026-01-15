@@ -2,6 +2,7 @@ package controllers.carrinho;
 
 import config.Constants;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import utils.Utils;
 
 import java.io.IOException;
 
+@WebServlet("/carrinho/remover")
 public class RemoverItemCarrinhoServlet extends HttpServlet {
     @Override
     public void service(HttpServletRequest request, HttpServletResponse response)
@@ -24,10 +26,11 @@ public class RemoverItemCarrinhoServlet extends HttpServlet {
 
         CarrinhoCompras.removerItem(produtoId, cookie);
         cookie.setMaxAge(Integer.MAX_VALUE);
+        String path = request.getContextPath();
+        cookie.setPath((path == null || path.isEmpty()) ? "/" : path);
         response.addCookie(cookie);
 
-        request.getRequestDispatcher("/home")
-                .forward(request,response);
+        response.sendRedirect(request.getContextPath() + "/carrinho");
 
     }
 }

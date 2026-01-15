@@ -86,9 +86,13 @@
                 </div>
 
                 <div class="card-footer bg-white border-top-0 p-3">
-                    <button class="btn btn-dark w-100 fw-bold py-2">
-                        <i class="bi bi-cart-plus me-2"></i> Adicionar
-                    </button>
+                    <form action="${pageContext.request.contextPath}/carrinho/adicionar" method="post" class="m-0">
+                        <input type="hidden" name="produtoId" value="<%= p.getId_produto() %>">
+                        <input type="hidden" name="quantidade" value="1">
+                        <button type="submit" class="btn btn-dark w-100 fw-bold py-2">
+                            <i class="bi bi-cart-plus me-2"></i> Adicionar
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

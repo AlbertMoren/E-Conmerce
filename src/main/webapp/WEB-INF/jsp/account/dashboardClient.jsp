@@ -29,7 +29,7 @@
         <h3>Minha Conta</h3>
         <ul class="sidebar-menu">
             <li class="active"><a href="#">Meus Dados</a></li>
-            <li><a href="#">Meus Pedidos</a></li>
+            <li><a href="<%= request.getContextPath() %>/account/compras">Meus Pedidos</a></li>
             <li><a href="<%= request.getContextPath() %>/logout">Sair</a></li>
         </ul>
     </nav>
