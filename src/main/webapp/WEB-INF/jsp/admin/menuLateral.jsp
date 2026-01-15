@@ -17,9 +17,20 @@
         <a href="${pageContext.request.contextPath}/admin/produtos" class="list-group-item list-group-item-action bg-dark text-white border-0 py-3 px-4">
             <i class="bi bi-box-seam me-3"></i> Produtos
         </a>
-        <a href="${pageContext.request.contextPath}/admin/estoque" target="_blank" class="list-group-item list-group-item-action bg-dark text-white border-0 py-3 px-4">
-            <i class="bi bi-file-pdf me-3"></i> Relatório PDF
+        <a href="#submenuRelatorios" data-bs-toggle="collapse" class="list-group-item list-group-item-action bg-dark text-white border-0 py-3 px-4 d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-file-earmark-bar-graph me-3"></i> Relatórios</span>
+            <i class="bi bi-chevron-down small"></i>
         </a>
+
+        <div class="collapse" id="submenuRelatorios">
+            <a href="${pageContext.request.contextPath}/admin/estoque" target="_blank" class="list-group-item list-group-item-action bg-dark text-white border-0 py-2 ps-5 small">
+                <i class="bi bi-box-seam me-2"></i> Produtos/Estoque
+            </a>
+
+            <a href="${pageContext.request.contextPath}/admin/relatorio-vendas" target="_blank" class="list-group-item list-group-item-action bg-dark text-white border-0 py-2 ps-5 small">
+                <i class="bi bi-receipt me-2"></i> Histórico Vendas
+            </a>
+        </div>
 
         <div class="mt-5 px-4">
             <hr class="text-secondary">

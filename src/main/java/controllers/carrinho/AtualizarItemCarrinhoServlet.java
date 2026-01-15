@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.carrinho.CarrinhoCompras;
+import models.produto.Produto;
+import models.produto.ProdutoDAO;
 import utils.Utils;
 
 import java.io.IOException;
@@ -21,6 +23,15 @@ public class AtualizarItemCarrinhoServlet extends HttpServlet {
 
         int produtoId = Integer.parseInt(request.getParameter("produtoId"));
         int quantidade = Integer.parseInt(request.getParameter("quantidade"));
+
+        ProdutoDAO produtoDAO = new ProdutoDAO();
+        Produto produto = produtoDAO.obter(produtoId);
+        int estoqueProduto = produto.getQuantidade();
+
+        if (estoqueProduto < quantidade) {
+            quantidade = estoqueProduto;
+            request.getSession().setAttribute("mensagemErro", "Quantidade inválida de um determinado produto no Carrinho.");
+        }
 
         Cookie cookie = Utils.obterCookieCarrrinhoCompras(request);
         if (cookie == null) {

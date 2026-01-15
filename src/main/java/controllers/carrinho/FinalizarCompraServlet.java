@@ -6,6 +6,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import models.carrinho.CarrinhoCompras;
 import models.carrinho.CarrinhoItem;
+import models.produto.Produto;
+import models.produto.ProdutoDAO;
 import models.usuario.Usuario;
 import models.venda.VendaDAO;
 import utils.Utils;
@@ -38,6 +40,14 @@ public class FinalizarCompraServlet extends HttpServlet {
             if (item.getProduto() == null) {
                 continue;
             }
+
+            ProdutoDAO produtoDAO = new ProdutoDAO();
+            int produtoId = item.getProduto().getId_produto();
+            int estoqueProduto = item.getProduto().getQuantidade();
+            int quantidadeCompra = item.getQuantidade();
+            int restanteEstoque = estoqueProduto - quantidadeCompra;
+            produtoDAO.atualizar_quantidade(produtoId,restanteEstoque);
+
             BigDecimal preco = BigDecimal.valueOf(item.getProduto().getPreco());
             total = total.add(preco.multiply(BigDecimal.valueOf(item.getQuantidade())));
         }

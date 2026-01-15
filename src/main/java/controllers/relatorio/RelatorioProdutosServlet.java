@@ -1,7 +1,6 @@
-package controllers.produto;
+package controllers.relatorio;
 
 import jakarta.servlet.annotation.WebServlet;
-import models.categoria.Categoria;
 import models.produto.Produto;
 import models.produto.ProdutoDAO;
 
@@ -47,7 +46,8 @@ public class RelatorioProdutosServlet extends HttpServlet {
 
             // --- CONFIGURAÇÕES VISUAIS ---
             float leading = 25;
-            float[] cols = {50, 100, 310, 440, 510, 560};
+//            float[] cols = {50, 100, 310, 440, 510, 560};
+            float[] cols = {50, 100, 285, 415, 485, 560};
             PDType1Font fontBold = new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD);
             PDType1Font fontNormal = new PDType1Font(Standard14Fonts.FontName.HELVETICA);
 
@@ -92,7 +92,7 @@ public class RelatorioProdutosServlet extends HttpServlet {
                 contentStream.newLineAtOffset(cols[1] - cols[0], 0); contentStream.showText("Descrição");
                 contentStream.newLineAtOffset(cols[2] - cols[1], 0); contentStream.showText("Categoria");
                 contentStream.newLineAtOffset(cols[3] - cols[2], 0); contentStream.showText("Preço");
-                contentStream.newLineAtOffset(cols[4] - cols[3], 0); contentStream.showText("Qtde");
+                contentStream.newLineAtOffset(cols[4] - cols[3], 0); contentStream.showText("Quantidade");
                 contentStream.endText();
 
                 y -= leading;
@@ -129,7 +129,7 @@ public class RelatorioProdutosServlet extends HttpServlet {
                         contentStream.stroke();
                     }
 
-                    String descricao = truncate(p.getDescricao(), 30);
+                    String descricao = truncate(p.getDescricao(), 25);
                     String categoria = truncate(p.getCategoria() != null ? p.getCategoria().getNome() : "", 22);
                     String preco = String.format("R$ %.2f", p.getPreco());
                     String quantidade = String.valueOf(p.getQuantidade());

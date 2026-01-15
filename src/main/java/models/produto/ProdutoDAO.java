@@ -232,4 +232,35 @@ public class ProdutoDAO {
         }
     }
 
+    public boolean atualizar_quantidade(int produtoId,int quantidade){
+        boolean sucesso = false;
+        if (quantidade <= 0) quantidade = 0;
+        String sql = "UPDATE produto SET quantidade = ? WHERE id_produto = ?";
+
+        try(Connection connection = DriverManager.getConnection(BD_URL, BD_USUARIO, BD_SENHA);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, quantidade);
+            preparedStatement.setInt(2, produtoId);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected == 1) {
+                sucesso = true;
+            }
+
+            if (sucesso) {
+                connection.commit();
+            } else {
+                connection.rollback();
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("Erro ao atualizar produto: " + ex.getMessage());
+            ex.printStackTrace();
+            return false;
+        }
+        return sucesso;
+    }
+
 }

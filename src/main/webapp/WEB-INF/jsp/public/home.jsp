@@ -52,6 +52,9 @@
             List<Produto> lista = (List<Produto>) request.getAttribute("produtos");
             if (lista != null && !lista.isEmpty()) {
                 for (Produto p : lista) {
+                    if(p.getQuantidade() <= 0){
+                        continue;
+                    }
         %>
         <div class="col">
             <div class="card h-100 shadow-sm product-card">
